@@ -106,7 +106,7 @@ function renderFooter() {
         </div>
         <div class="footer-bottom">
           <span>© <span data-year></span> Tiger Gents Salon. All rights reserved.</span>
-          <span>5-star reviews on Google.</span>
+          <span>5.0 rating from 100+ customer reviews on Google.</span>
         </div>
       </div>
     </footer>`;

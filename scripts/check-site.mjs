@@ -33,6 +33,17 @@ for (const file of htmlFiles) {
   }
 }
 
+const homepage = readFileSync(join(root, "index.html"), "utf8");
+if (!/100\+ customer reviews/.test(homepage)) {
+  failures.push("index.html: missing the current Google review milestone");
+}
+if (!/Directly linked to Google/.test(homepage)) {
+  failures.push("index.html: missing review-source transparency copy");
+}
+if (!/data-track="google_reviews_click"/.test(homepage)) {
+  failures.push("index.html: missing the tracked direct Google reviews link");
+}
+
 const sharedSiteScript = readFileSync(join(root, "assets/js/site.js"), "utf8");
 if (retiredPlatformPattern.test(sharedSiteScript)) {
   failures.push("assets/js/site.js: contains a retired booking-platform reference");

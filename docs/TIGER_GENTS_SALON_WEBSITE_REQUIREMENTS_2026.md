@@ -125,6 +125,7 @@ This is an implementation snapshot and should be kept aligned with current salon
 - **Category:** Gents salon / barber and male grooming
 - **Location:** Lake Central Tower, Marasi Drive, Business Bay, Dubai
 - **Published Google rating:** 5 stars
+- **Published Google review milestone:** 100+ reviews, owner-confirmed July 2026
 - **Published hours at research time:** Monday–Sunday, 10:00 AM–12:00 AM
 - **Booking capabilities:** Online appointment selection and confirmation
 - **Service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
@@ -1155,7 +1156,8 @@ Directly under hero or partially overlapping it on desktop.
 Display:
 
 - Google five-star rating
-- Current Google review count
+- Current Google review milestone using maintainable threshold copy such as “100+”
+- Direct Google source link so visitors can inspect the published feedback
 - Location
 - Opening hours
 - Instant confirmation
