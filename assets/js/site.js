@@ -1,0 +1,278 @@
+const BUSINESS = Object.freeze({
+  name: "Tiger Gents Salon",
+  bookingUrl:
+    "https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&cartId=f967e535-b600-486c-9c10-2b1b048d26ae",
+  freshaUrl:
+    "https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s",
+  mapUrl: "https://share.google/PqwDRzzGm2ZEVF8zT",
+  rating: "5.0",
+  reviewCount: 77,
+  hours: "10:00 AM–12:00 AM",
+  verifiedAt: "2026-07-19"
+});
+
+const navItems = [
+  ["services.html", "Services"],
+  ["team.html", "Team"],
+  ["standard.html", "The Tiger Standard"],
+  ["gallery.html", "Gallery"],
+  ["about.html", "About"],
+  ["contact.html", "Contact"]
+];
+
+const page = location.pathname.split("/").pop() || "index.html";
+const relative = "";
+
+function bookingLink(label = "Book appointment", locationName = "unknown", className = "button") {
+  return `<a class="${className} js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="${locationName}">${label}<span aria-hidden="true">↗</span></a>`;
+}
+
+function renderHeader() {
+  const mount = document.querySelector("[data-site-header]");
+  if (!mount) return;
+  const links = navItems
+    .map(([href, label]) => {
+      const current = page === href ? ' aria-current="page"' : "";
+      return `<li><a class="nav-link" href="${relative}${href}"${current}>${label}</a></li>`;
+    })
+    .join("");
+
+  mount.innerHTML = `
+    <div class="utility">
+      <div class="container utility-inner">
+        <span>Lake Central Tower · Business Bay, Dubai</span>
+        <span class="utility-rating">${BUSINESS.rating} on Fresha · ${BUSINESS.reviewCount} verified reviews · Open daily ${BUSINESS.hours}</span>
+      </div>
+    </div>
+    <header class="site-header" data-header>
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="Tiger Gents Salon home">
+          <img src="assets/brand/tiger-logo-web.webp" alt="Tiger Gents Salon" width="400" height="267">
+        </a>
+        <nav class="site-nav" id="site-navigation" aria-label="Primary navigation">
+          <ul class="nav-list">${links}</ul>
+        </nav>
+        <div class="header-actions">
+          ${bookingLink("Book appointment", "header", "button header-book")}
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Open navigation menu"><span></span></button>
+        </div>
+      </div>
+    </header>`;
+}
+
+function renderFooter() {
+  const mount = document.querySelector("[data-site-footer]");
+  if (!mount) return;
+  mount.innerHTML = `
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="assets/brand/tiger-logo-web.webp" alt="Tiger Gents Salon" width="400" height="267" loading="lazy">
+            <p>Premium grooming, personal attention, and dependable service standards in the heart of Business Bay.</p>
+          </div>
+          <div>
+            <p class="footer-heading">Visit</p>
+            <ul class="footer-links">
+              <li><a href="contact.html">Lake Central Tower</a></li>
+              <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Marasi Drive, Business Bay</a></li>
+              <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Get directions ↗</a></li>
+              <li><span>Daily · ${BUSINESS.hours}</span></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer-heading">Navigate</p>
+            <ul class="footer-links">
+              <li><a href="services.html">Services</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="standard.html">The Tiger Standard</a></li>
+              <li><a href="products.html">Product quality</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer-heading">Book & policies</p>
+            <ul class="footer-links">
+              <li><a class="js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="footer">Book through Fresha ↗</a></li>
+              <li><a href="${BUSINESS.freshaUrl}" target="_blank" rel="noopener noreferrer" data-track="fresha_profile_click">View Fresha profile ↗</a></li>
+              <li><a href="privacy.html">Privacy</a></li>
+              <li><a href="cookies.html">Cookies</a></li>
+              <li><a href="terms.html">Booking terms</a></li>
+              <li><a href="accessibility.html">Accessibility</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span data-year></span> Tiger Gents Salon. All rights reserved.</span>
+          <span>Business information verified against Fresha on 19 July 2026.</span>
+        </div>
+      </div>
+    </footer>`;
+}
+
+function renderMobileActions() {
+  const mount = document.querySelector("[data-mobile-actions]");
+  if (!mount) return;
+  mount.className = "mobile-actions";
+  mount.setAttribute("aria-label", "Quick actions");
+  mount.innerHTML = `
+    ${bookingLink("Book appointment", "mobile_sticky")}
+    <a class="button button-secondary" href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Directions <span aria-hidden="true">↗</span></a>`;
+}
+
+function renderCookieBanner() {
+  const mount = document.querySelector("[data-cookie-banner]");
+  if (!mount || localStorage.getItem("tiger-cookie-choice")) return;
+  mount.className = "cookie-banner";
+  mount.innerHTML = `
+    <p><strong>Your privacy, respected.</strong><br>We use essential local storage for site preferences. Optional analytics is not loaded unless you accept.</p>
+    <div class="cookie-actions">
+      <button class="button" type="button" data-cookie="accept">Accept optional</button>
+      <button class="button button-secondary" type="button" data-cookie="essential">Essential only</button>
+      <a class="text-link" href="cookies.html">Details</a>
+    </div>`;
+}
+
+function track(name, details = {}) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: name, ...details });
+}
+
+function initNavigation() {
+  const button = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".site-nav");
+  if (!button || !nav) return;
+  const setOpen = (open) => {
+    document.body.classList.toggle("nav-open", open);
+    document.body.style.overflow = open ? "hidden" : "";
+    button.setAttribute("aria-expanded", String(open));
+    button.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+    if (open) nav.querySelector("a")?.focus();
+    else button.focus();
+  };
+  button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && button.getAttribute("aria-expanded") === "true") setOpen(false);
+  });
+  nav.addEventListener("click", (event) => {
+    if (event.target.closest("a") && document.body.classList.contains("nav-open")) setOpen(false);
+  });
+}
+
+function initHeader() {
+  const header = document.querySelector("[data-header]");
+  if (!header) return;
+  const sync = () => header.classList.toggle("scrolled", scrollY > 24);
+  sync();
+  addEventListener("scroll", sync, { passive: true });
+}
+
+function initTracking() {
+  document.addEventListener("click", (event) => {
+    const booking = event.target.closest(".js-booking");
+    if (booking) {
+      track("booking_click", {
+        booking_click_location: booking.dataset.bookingLocation || "unknown",
+        booking_click_page: page,
+        booking_click_device: matchMedia("(max-width: 820px)").matches ? "mobile" : "desktop"
+      });
+    }
+    const tracked = event.target.closest("[data-track]");
+    if (tracked) track(tracked.dataset.track, { page });
+  });
+}
+
+function initReveals() {
+  const items = document.querySelectorAll(".reveal");
+  if (!items.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    items.forEach((item) => item.classList.add("in-view"));
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    }),
+    { threshold: 0.12 }
+  );
+  items.forEach((item) => observer.observe(item));
+}
+
+function initFilters() {
+  const controls = document.querySelectorAll("[data-filter]");
+  const rows = document.querySelectorAll("[data-category]");
+  if (!controls.length || !rows.length) return;
+  controls.forEach((control) => {
+    control.addEventListener("click", () => {
+      const filter = control.dataset.filter;
+      controls.forEach((item) => item.setAttribute("aria-pressed", String(item === control)));
+      rows.forEach((row) => {
+        row.hidden = filter !== "all" && row.dataset.category !== filter;
+      });
+      track("service_category_select", { category: filter });
+    });
+  });
+}
+
+function initGallery() {
+  const dialog = document.querySelector(".lightbox");
+  const items = [...document.querySelectorAll(".gallery-item")];
+  if (!dialog || !items.length) return;
+  const image = dialog.querySelector("img");
+  const caption = dialog.querySelector("[data-caption]");
+  const close = () => dialog.close();
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      const source = item.querySelector("img");
+      image.src = source.currentSrc || source.src;
+      image.alt = source.alt;
+      caption.textContent = source.alt;
+      dialog.showModal();
+      track("gallery_open", { image: source.src.split("/").pop() });
+    });
+  });
+  dialog.querySelector("[data-close]")?.addEventListener("click", close);
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) close();
+  });
+}
+
+function initCookieBanner() {
+  const banner = document.querySelector(".cookie-banner");
+  if (!banner) return;
+  banner.addEventListener("click", (event) => {
+    const choice = event.target.closest("[data-cookie]")?.dataset.cookie;
+    if (!choice) return;
+    localStorage.setItem("tiger-cookie-choice", choice);
+    banner.hidden = true;
+    track("cookie_choice", { choice });
+  });
+}
+
+function initMobileActions() {
+  const bar = document.querySelector(".mobile-actions");
+  const footer = document.querySelector(".site-footer");
+  if (!bar || !footer || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(
+    ([entry]) => bar.classList.toggle("is-hidden", entry.isIntersecting),
+    { threshold: 0.08 }
+  ).observe(footer);
+}
+
+renderHeader();
+renderFooter();
+renderMobileActions();
+renderCookieBanner();
+document.querySelectorAll("[data-year]").forEach((node) => (node.textContent = new Date().getFullYear()));
+initNavigation();
+initHeader();
+initTracking();
+initReveals();
+initFilters();
+initGallery();
+initCookieBanner();
+initMobileActions();

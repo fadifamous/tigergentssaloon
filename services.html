@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Services & Prices | Tiger Gents Salon, Business Bay</title>
+  <meta name="description" content="View verified prices and durations for hair, shaving, nail care, facial and massage services at Tiger Gents Salon in Business Bay.">
+  <meta name="theme-color" content="#090a09">
+  <link rel="canonical" href="https://tigergentssaloon.com/services.html">
+  <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div data-site-header></div>
+  <main id="main-content">
+    <header class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Verified service guide</p>
+        <h1>Choose with clarity.</h1>
+        <p class="lead">Compare selected current services, durations, and prices. Fresha remains the live source for the complete 49-service catalogue and appointment availability.</p>
+        <div class="button-row">
+          <a class="button js-booking" href="https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&amp;cartId=f967e535-b600-486c-9c10-2b1b048d26ae" target="_blank" rel="noopener noreferrer" data-booking-location="services_hero">View live availability <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </header>
+    <section class="section-sm">
+      <div class="container">
+        <div class="filters" role="group" aria-label="Filter services by category">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">All selected</button>
+          <button class="filter" type="button" data-filter="hair" aria-pressed="false">Hair</button>
+          <button class="filter" type="button" data-filter="shaving" aria-pressed="false">Shaving</button>
+          <button class="filter" type="button" data-filter="nails" aria-pressed="false">Nail care</button>
+          <button class="filter" type="button" data-filter="facial" aria-pressed="false">Facial</button>
+          <button class="filter" type="button" data-filter="massage" aria-pressed="false">Massage</button>
+        </div>
+        <div class="service-list" data-service-list></div>
+        <div class="verified-note">
+          <span>Selected services verified against Fresha on 19 July 2026. Prices and availability may change.</span>
+          <a class="text-link" href="https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s" target="_blank" rel="noopener noreferrer" data-track="fresha_profile_click">See all services on Fresha</a>
+        </div>
+      </div>
+    </section>
+    <section class="section surface">
+      <div class="container editorial-split">
+        <figure class="editorial-image reveal"><img src="assets/images/barber-chairs-close-opt.webp" alt="Prepared barber chairs inside Tiger Gents Salon" width="1200" height="675" loading="lazy"></figure>
+        <div class="reveal">
+          <p class="eyebrow">Need guidance?</p>
+          <h2>Start with the result you want.</h2>
+          <p class="lead">Choose a category on Fresha, then select the service, professional, and time that suit you. The team can confirm the intended finish before your service begins.</p>
+          <div class="button-row"><a class="button js-booking" href="https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&amp;cartId=f967e535-b600-486c-9c10-2b1b048d26ae" target="_blank" rel="noopener noreferrer" data-booking-location="services_bottom">Choose a service <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div data-site-footer></div>
+  <div data-mobile-actions></div>
+  <aside data-cookie-banner aria-live="polite"></aside>
+  <script src="assets/js/services-data.js"></script>
+  <script>
+    const list = document.querySelector("[data-service-list]");
+    const booking = "https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&cartId=f967e535-b600-486c-9c10-2b1b048d26ae";
+    list.innerHTML = window.TIGER_SERVICES.map((service) => `
+      <article class="service-row" data-category="${service.category}">
+        <h3>${service.name}</h3>
+        <p>${service.description}</p>
+        <span class="duration">${service.duration}</span>
+        <strong class="price">${service.price}</strong>
+        <a class="text-link js-booking" href="${booking}" target="_blank" rel="noopener noreferrer" data-booking-location="service_${service.name.toLowerCase().replaceAll(" ","_")}">Book service</a>
+      </article>`).join("");
+  </script>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>
