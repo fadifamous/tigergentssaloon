@@ -300,6 +300,12 @@ h3 {
   color: var(--brass-light);
 }
 
+.utility-contact {
+  color: var(--ivory);
+  text-decoration-color: rgb(208 173 114 / 0.55);
+  text-underline-offset: 3px;
+}
+
 .site-header {
   position: sticky;
   z-index: 50;
@@ -884,6 +890,29 @@ h3 {
   font-size: 1.06rem;
 }
 
+.contact-direct {
+  display: grid;
+  margin: 0 0 30px;
+  gap: 6px;
+}
+
+.contact-direct span {
+  color: #6c6458;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.contact-direct a {
+  width: fit-content;
+  color: var(--obsidian);
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  text-decoration-color: rgb(124 91 47 / 0.5);
+  text-underline-offset: 6px;
+}
+
 .hours {
   width: 100%;
   border-collapse: collapse;
@@ -1272,6 +1301,22 @@ h3 {
   transform: translateY(110%);
 }
 
+.button-whatsapp {
+  border-color: #2ca76d;
+  color: #fff;
+  background: #167c4d;
+}
+
+.button-whatsapp:hover {
+  background: #1b915a;
+}
+
+.button-whatsapp svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
 .cookie-banner {
   position: fixed;
   z-index: 80;
@@ -1342,15 +1387,24 @@ h3 {
   }
 
   .nav-open .site-nav {
-    position: fixed;
-    z-index: 49;
-    top: var(--header-height);
-    right: 0;
-    bottom: 0;
-    left: 0;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
     display: block;
+    width: 100vw;
+    max-width: none;
+    height: calc(100dvh - 100%);
     padding: 50px 20px;
-    background: rgb(9 10 9 / 0.985);
+    background: #090a09;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(-50%);
+  }
+
+  .nav-open .site-header {
+    border-color: rgb(243 239 231 / 0.1);
+    background: #090a09;
   }
 
   .nav-open .nav-list {
@@ -1369,6 +1423,7 @@ h3 {
     font-size: clamp(1.8rem, 6vw, 3rem);
     font-weight: 400;
     letter-spacing: -0.02em;
+    color: var(--ivory);
   }
 
   .trust-grid {
@@ -1446,6 +1501,10 @@ h3 {
     min-height: 42px;
     padding: 8px 12px;
     font-size: 0.68rem;
+  }
+
+  .nav-open .site-nav {
+    padding: 28px 16px calc(110px + env(safe-area-inset-bottom));
   }
 
   .hero {

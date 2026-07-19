@@ -8,7 +8,7 @@
 **Primary location:** Tiger Gents Salon, Lake Central Tower, Marasi Drive, Business Bay, Dubai  
 **Primary language:** English  
 **Optional future language:** Arabic with full RTL support  
-**Website type:** Premium service-business website with Fresha booking conversion  
+**Website type:** Premium service-business website with Setmore booking conversion
 **Priority:** Mobile-first, responsive, high performance, highly polished, and easy to maintain
 
 ---
@@ -28,7 +28,7 @@ The website must communicate:
 7. **Expert professionals**
 8. **Comfort, confidence, and discretion**
 9. **Modern grooming in the heart of Business Bay**
-10. **Simple and immediate booking through Fresha**
+10. **Simple and immediate booking through Setmore**
 
 The website must look luxurious without becoming theatrical, difficult to use, slow, overly dark, or visually cluttered. Luxury should come from **restraint, craft, proportion, photography, typography, rhythm, consistency, and detail**, not from adding excessive gold, animation, glow, gradients, or decorative effects.
 
@@ -63,10 +63,10 @@ Use for:
 - General appointment discovery
 - Salon-led content review before launch
 
-### 2.2 Direct booking link
+### 2.2 Direct Setmore booking link
 
 ```text
-https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&cartId=f967e535-b600-486c-9c10-2b1b048d26ae
+https://tigergentssaloon.setmore.com
 ```
 
 Use for all high-intent actions labelled:
@@ -78,7 +78,7 @@ Use for all high-intent actions labelled:
 - Choose a service
 - Book with [team member]
 
-Open in a new browser tab unless an approved Fresha embed provides a better supported experience.
+Open in a new browser tab unless an approved Setmore embed provides a better supported experience.
 
 ### 2.3 Google Maps link
 
@@ -109,7 +109,7 @@ The website must not present invented prices, offers, ratings, service durations
 
 The coding agent must:
 
-1. Review all changeable information against the salon’s current Fresha setup immediately before launch.
+1. Review all changeable information against the salon’s current Setmore setup immediately before launch.
 2. Keep editable information in a CMS, configuration file, or structured data source.
 3. Label any draft content clearly as placeholder.
 4. Never display fake scarcity such as “only one slot left” unless supplied by a real booking API.
@@ -126,7 +126,7 @@ This is an implementation snapshot and should be kept aligned with current salon
 - **Location:** Lake Central Tower, Marasi Drive, Business Bay, Dubai
 - **Published Fresha and Google ratings:** 5 stars
 - **Published hours at research time:** Monday–Sunday, 10:00 AM–12:00 AM
-- **Published booking capabilities:** Instant confirmation and app payment
+- **Booking capabilities:** Online appointment selection and confirmation
 - **Service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
 
 All of the above must be checked again before production launch.
@@ -157,7 +157,7 @@ Each card must support:
 - Optional years of experience
 - Optional rating when approved for publication
 - “Book with [Name]” action
-- Link to the Fresha booking flow
+- Link to the Setmore booking flow
 - Accessible alt text
 - Consistent portrait crop and lighting
 - Hover/focus detail on desktop
@@ -242,12 +242,12 @@ It should not resemble:
 
 ### 6.1 Primary objective
 
-Increase completed Fresha bookings.
+Increase completed Setmore bookings.
 
 ### 6.2 Secondary objectives
 
 - Present services clearly
-- Build trust before sending users to Fresha
+- Build trust before sending users to Setmore
 - Introduce the team
 - Demonstrate quality and standards
 - Highlight personal attention
@@ -266,13 +266,13 @@ Increase completed Fresha bookings.
 4. View services
 5. Get directions
 6. Call salon
-7. Message salon, when an approved WhatsApp number is supplied
+7. Message the salon on WhatsApp at +971 56 228 5900
 
 ### 6.4 Suggested KPIs
 
-- Homepage-to-Fresha click-through rate
-- Service-page-to-Fresha click-through rate
-- Team-card-to-Fresha click-through rate
+- Homepage-to-Setmore click-through rate
+- Service-page-to-Setmore click-through rate
+- Team-card-to-Setmore click-through rate
 - Google Maps direction clicks
 - Call clicks
 - Mobile sticky booking-bar engagement
@@ -306,10 +306,10 @@ Increase completed Fresha bookings.
 1. Opens site on mobile
 2. Sees “Book appointment”
 3. Taps sticky booking action
-4. Fresha opens
+4. Setmore opens
 5. Selects service/team/time
 
-Target: Under two interactions before Fresha.
+Target: Under two interactions before Setmore.
 
 #### Journey B — First-time client
 
@@ -317,7 +317,7 @@ Target: Under two interactions before Fresha.
 2. Sees location, rating, positioning, and real salon image
 3. Reviews services and standards
 4. Checks team or reviews
-5. Books through Fresha
+5. Books through Setmore
 
 Target: Trust established within the first 30–60 seconds.
 
@@ -327,7 +327,7 @@ Target: Trust established within the first 30–60 seconds.
 2. Opens Team
 3. Selects ABED, Shahem, Joe, or Tiya
 4. Chooses “Book with [Name]”
-5. Continues on Fresha
+5. Continues on Setmore
 
 #### Journey D — Location check
 
@@ -342,7 +342,7 @@ Target: Trust established within the first 30–60 seconds.
 1. Opens Services
 2. Filters or scans by category
 3. Sees description, duration, and price
-4. Books through Fresha
+4. Books through Setmore
 
 ---
 
@@ -572,7 +572,7 @@ Optional “Find your service” assistant:
 - Recommend service categories
 - Never pretend to diagnose hair or skin
 - Never replace professional consultation
-- Link to matching Fresha service category
+- Link to the matching Setmore service category when supported
 - Do not force chatbot interaction
 
 #### H. Performance-conscious design
@@ -1053,12 +1053,12 @@ Include:
 - Navigation
 - Full location
 - Hours
-- Fresha profile
+- Setmore booking page
 - Booking link
 - Google Maps
 - Instagram, if supplied
 - Phone, if supplied
-- WhatsApp, if supplied
+- WhatsApp at +971 56 228 5900
 - Privacy
 - Cookies
 - Terms
@@ -1169,7 +1169,7 @@ Heading:
 
 > Services, refined around you.
 
-Show 4–6 high-priority services from real Fresha data.
+Show 4–6 high-priority services from current salon booking data.
 
 Each card:
 
@@ -1180,7 +1180,7 @@ Each card:
 - Category
 - Book action
 - High-quality image or refined icon
-- No invented ritual names unless owner approves and Fresha naming is aligned
+- No invented ritual names unless owner approves and booking names are aligned
 
 A “View all services” action links to the Services page.
 
@@ -1304,7 +1304,7 @@ Display:
 - Dubai, UAE
 - Hours
 - Google Maps action
-- Fresha booking action
+- Setmore booking action
 - Exterior/building photo
 - Optional static styled map preview
 - Parking or landmark details only when confirmed
@@ -1317,7 +1317,7 @@ Heading:
 
 Copy:
 
-> Choose your service, preferred professional, and appointment time through Fresha.
+> Choose your service, preferred professional, and appointment time through our online booking page.
 
 Actions:
 
@@ -1329,8 +1329,8 @@ Actions:
 Persistent at the bottom after the hero:
 
 - Primary: Book
-- Secondary: Directions
-- Optional: Call
+- Secondary: WhatsApp
+- Click-to-call number available in the header, contact page, and footer
 
 Requirements:
 
@@ -1350,7 +1350,7 @@ Requirements:
 - Make comparison easy
 - Preserve premium presentation
 - Drive bookings
-- Maintain accuracy with Fresha
+- Maintain accuracy with Setmore
 
 ### 18.2 Categories
 
@@ -1404,7 +1404,7 @@ Last content review date
 - If price varies, explain why.
 - Add-ons must be clearly labelled.
 - Descriptions must focus on the client outcome.
-- Include “View live availability on Fresha.”
+- Include “View live availability.”
 
 ---
 
@@ -1498,7 +1498,7 @@ Do not become an ecommerce store unless inventory, payment, fulfillment, returns
 
 ### 22.1 Principle
 
-The website builds desire and trust. Fresha completes the booking.
+The website builds desire and trust. Setmore completes the booking.
 
 ### 22.2 Booking behavior
 
@@ -1508,7 +1508,7 @@ Implementation:
 
 ```html
 <a
-  href="https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&cartId=f967e535-b600-486c-9c10-2b1b048d26ae"
+  href="https://tigergentssaloon.setmore.com"
   target="_blank"
   rel="noopener noreferrer"
 >
@@ -1529,7 +1529,7 @@ Track before outbound navigation:
 
 Do not attach personally identifiable information.
 
-### 22.4 Optional Fresha embed
+### 22.4 Optional Setmore embed
 
 Only use an embed when:
 
@@ -1546,7 +1546,7 @@ Otherwise, use a high-quality outbound transition.
 
 Optional small confirmation sheet:
 
-> You’re continuing to Fresha to choose your service, professional, and time.
+> You’re continuing to online booking to choose your service, professional, and time.
 
 Buttons:
 
@@ -1877,7 +1877,7 @@ Do not mark up reviews or ratings in ways that violate search-engine policies.
 
 ### 28.5 Suggested meta description
 
-> Premium haircuts, beard grooming, nail care, facials and men’s grooming at Tiger Gents Salon, Lake Central Tower, Business Bay. Book online through Fresha.
+> Premium haircuts, beard grooming, nail care, facials and men’s grooming at Tiger Gents Salon, Lake Central Tower, Business Bay. Book online.
 
 Check character length during implementation.
 
@@ -2195,7 +2195,7 @@ Answer:
 
 Allowed:
 
-- “View today’s availability” when linking to live Fresha
+- “View today’s availability” when linking to live Setmore availability
 - “Instant confirmation” when currently true
 
 Not allowed:
@@ -2261,7 +2261,7 @@ Each statement must be confirmed by salon management.
 - Safe-area inset support
 - Forms use correct input types
 - No tiny text
-- No sticky elements covering Fresha transition or cookie controls
+- No sticky elements covering Setmore transition or cookie controls
 - Test in Safari iOS and Chrome Android
 - Test with text enlarged
 - Test landscape orientation
@@ -2276,7 +2276,7 @@ Design all states:
 - Empty service category
 - Missing team photo
 - Missing biography
-- Fresha unavailable
+- Setmore unavailable
 - Network offline
 - Image failure
 - Video failure
@@ -2347,7 +2347,7 @@ scroll_90
 - Privacy policy
 - Cookie controls where legally required
 - Do not capture booking data on the site unless necessary
-- Fresha handles booking data after outbound transition
+- Setmore handles booking data after outbound transition
 
 ---
 
@@ -2430,7 +2430,7 @@ The website is ready for launch only when:
 
 ### Content
 
-- [ ] Fresha links tested
+- [ ] Setmore links tested
 - [ ] Google Maps link tested
 - [ ] Services, prices, and durations reviewed
 - [ ] Hours reviewed
@@ -2539,7 +2539,7 @@ Provide a short owner guide explaining:
 - How to replace images
 - How to update review links and rating copy
 - How to edit SEO fields
-- How to check Fresha links
+- How to check Setmore links
 - How to publish changes
 
 ---
@@ -2556,7 +2556,7 @@ Provide a short owner guide explaining:
 - Services
 - Team
 - Contact/location
-- Fresha integration
+- Setmore integration
 - SEO foundation
 
 ### Phase 2 — Premium experience
@@ -2578,7 +2578,7 @@ Provide a short owner guide explaining:
 - Product commerce
 - Personalised service finder
 - CRM integration
-- Live Fresha data integration, if supported
+- Live Setmore data integration, if supported
 - Editorial grooming content
 
 ---
@@ -2610,7 +2610,7 @@ These references informed the requirements. Review current salon details before 
   https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s
 
 - Tiger Gents Salon direct booking  
-  https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&cartId=f967e535-b600-486c-9c10-2b1b048d26ae
+  https://tigergentssaloon.setmore.com
 
 - Google Maps share link  
   https://share.google/PqwDRzzGm2ZEVF8zT

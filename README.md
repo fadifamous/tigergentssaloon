@@ -9,14 +9,15 @@ A production-ready, mobile-first website for Tiger Gents Salon at Lake Central T
 - Supplied salon photography and primary logo
 - Transparent primary logo, favicon, app icons, OG image, and email export
 - Service prices and durations stored in `assets/js/services-data.js`
-- Fresha booking links on all high-intent actions
+- Setmore booking links on all high-intent actions
+- Click-to-call and persistent mobile WhatsApp actions for +971 56 228 5900
 - Google Maps direction links
 - Responsive service filtering
 - Keyboard-accessible navigation, gallery dialog, and FAQ
 - Reduced-motion support and mobile sticky booking actions
 - LocalBusiness and FAQ structured data
 - Sitemap, robots file, policy pages, and owner documentation
-- Privacy-ready analytics event hooks with no analytics vendor enabled by default
+- Google Tag Manager container `GTM-K6LPRZ84` and privacy-aware event hooks
 
 ## Run locally
 
@@ -70,7 +71,7 @@ Edit `assets/js/services-data.js`. Each record has:
 
 The Services page is generated from this file. Featured homepage services are intentionally hand-curated in `index.html`, so update those cards separately when a featured service changes.
 
-Keep service changes aligned with the salon’s current Fresha catalogue.
+Keep service changes aligned with the salon’s current Setmore catalogue.
 
 ### Update hours
 
@@ -111,7 +112,7 @@ Each page contains its own title, description, canonical URL, and robots directi
 
 ### Check booking links
 
-Search for `f967e535` to find every direct Fresha booking URL. Run a manual click test on desktop and mobile after any URL change.
+Search for `tigergentssaloon.setmore.com` to find every direct booking URL. Run a manual click test on desktop and mobile after any URL change.
 
 ### Publish changes
 
@@ -127,7 +128,8 @@ The website currently presents:
 - Five-star reviews on Fresha and Google
 - Hours: Monday–Sunday, 10:00 AM–12:00 AM
 - Team: ABED, Shahem, Joe, Tiya
-- Instant confirmation and app payment shown
+- Phone and WhatsApp: +971 56 228 5900
+- Online booking: `https://tigergentssaloon.setmore.com`
 
 Keep these details aligned with the salon’s services and booking setup.
 
@@ -146,7 +148,7 @@ scripts/       Project integrity check
 
 ## Important launch notes
 
-- Add phone, WhatsApp, email, social links, team biographies, team portraits, product-brand details, parking information, or legal business information when the salon chooses to publish them.
-- No analytics vendor is enabled. Event hooks populate `window.dataLayer` only and do not transmit data.
+- Add email, social links, team biographies, team portraits, product-brand details, parking information, or legal business information when the salon chooses to publish them.
+- Google Tag Manager is installed. Configure any tags in container `GTM-K6LPRZ84` to respect the site’s consent choice.
 - The visible primary logo is `assets/brand/logo_transparent.png` (1535×1024 RGBA). `assets/brand/logoblackbackground.png` is retained as an alternate.
 - Manrope and Bodoni Moda are self-hosted from open-source variable-font files; retain the font licence files in `assets/fonts/`.

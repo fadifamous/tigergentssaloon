@@ -40,6 +40,9 @@ try {
   browser = await chromium.launch({ headless: true });
   const desktop = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await desktop.newPage();
+  await page.route("https://www.googletagmanager.com/**", (route) =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: "" })
+  );
   const consoleErrors = [];
   page.on("console", (message) => {
     if (
@@ -58,6 +61,10 @@ try {
     if (!(await page.locator("#main-content").count())) throw new Error(`${path}: missing main content`);
     if (!(await page.locator(".site-header").count())) throw new Error(`${path}: header did not render`);
     if (!(await page.locator(".site-footer").count())) throw new Error(`${path}: footer did not render`);
+    const bookingTargets = await page.locator(".js-booking").evaluateAll((links) => links.map((link) => link.href));
+    if (bookingTargets.some((href) => href !== "https://tigergentssaloon.setmore.com/")) {
+      throw new Error(`${path}: one or more booking actions do not use Setmore.`);
+    }
   }
 
   await page.goto(base, { waitUntil: "networkidle" });
@@ -104,12 +111,27 @@ try {
     hasTouch: true
   });
   const mobilePage = await mobile.newPage();
+  await mobilePage.route("https://www.googletagmanager.com/**", (route) =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: "" })
+  );
   await mobilePage.addInitScript(() => localStorage.setItem("tiger-cookie-choice", "essential"));
   await mobilePage.goto(base, { waitUntil: "networkidle" });
   await mobilePage.locator(".menu-toggle").click();
   if ((await mobilePage.locator(".menu-toggle").getAttribute("aria-expanded")) !== "true") throw new Error("Mobile menu failed to open.");
+  const mobileNavLinks = mobilePage.locator(".site-nav .nav-link");
+  if ((await mobileNavLinks.count()) !== 6) throw new Error("Mobile menu is missing navigation links.");
+  for (let index = 0; index < await mobileNavLinks.count(); index += 1) {
+    if (!(await mobileNavLinks.nth(index).isVisible())) throw new Error(`Mobile menu link ${index + 1} is not visible.`);
+  }
+  const mobileNavBox = await mobilePage.locator(".site-nav").boundingBox();
+  if (!mobileNavBox || mobileNavBox.height < 400) throw new Error("Mobile menu panel did not expand to the viewport.");
+  await mobilePage.screenshot({ path: "test-artifacts/menu-mobile.png", fullPage: false });
   await mobilePage.keyboard.press("Escape");
   if ((await mobilePage.locator(".menu-toggle").getAttribute("aria-expanded")) !== "false") throw new Error("Mobile menu failed to close.");
+  const bookingHref = await mobilePage.locator(".mobile-actions .js-booking").getAttribute("href");
+  const whatsappHref = await mobilePage.locator('.mobile-actions [data-track="whatsapp_click"]').getAttribute("href");
+  if (bookingHref !== "https://tigergentssaloon.setmore.com") throw new Error("Mobile booking action does not use Setmore.");
+  if (whatsappHref !== "https://wa.me/971562285900") throw new Error("Mobile WhatsApp action is incorrect.");
   const overflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
   if (overflow) throw new Error("Homepage has horizontal overflow at 390px.");
   await primeScrollReveals(mobilePage);
@@ -117,6 +139,11 @@ try {
   await mobilePage.goto(`${base}/team.html`, { waitUntil: "networkidle" });
   await primeScrollReveals(mobilePage);
   await mobilePage.screenshot({ path: "test-artifacts/team-mobile.png", fullPage: true });
+  await mobilePage.goto(`${base}/contact.html`, { waitUntil: "networkidle" });
+  const phoneLink = mobilePage.locator('.contact-direct a[href="tel:+971562285900"]');
+  if (!(await phoneLink.isVisible())) throw new Error("Contact phone number is not visible on mobile.");
+  await primeScrollReveals(mobilePage);
+  await mobilePage.screenshot({ path: "test-artifacts/contact-mobile.png", fullPage: true });
   await mobile.close();
 
   if (consoleErrors.length) throw new Error(`Browser console errors:\n${consoleErrors.join("\n")}`);

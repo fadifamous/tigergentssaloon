@@ -30,7 +30,7 @@ Latest local results:
 
 ## Manual functional coverage
 
-- Fresha booking CTAs open in a new tab with `noopener noreferrer`
+- Setmore booking CTAs open in a new tab with `noopener noreferrer`
 - Google Maps actions open the approved location link
 - Mobile menu exposes state with `aria-expanded` and closes with Escape
 - Service category filters update visible rows
@@ -42,4 +42,4 @@ Latest local results:
 
 ## Production follow-up
 
-Run final cross-browser and assistive-technology testing on the deployed URL. External Fresha and Google Maps behavior must also be rechecked immediately before launch.
+Run final cross-browser and assistive-technology testing on the deployed URL. External Setmore, WhatsApp, Fresha review, and Google Maps behavior must also be rechecked immediately before launch.

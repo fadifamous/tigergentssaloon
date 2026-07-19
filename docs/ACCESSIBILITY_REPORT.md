@@ -26,7 +26,7 @@ Target: WCAG 2.2 Level AA
 ## Known constraints
 
 - The supplied primary logo is detailed raster artwork; fine decorative features are not readable at favicon size. The image alt text provides the salon name.
-- External Fresha and Google Maps experiences are outside this codebase.
+- External Setmore, WhatsApp, Fresha review, and Google Maps experiences are outside this codebase.
 - A full assistive-technology test with representative users remains recommended before a public launch.
 
 ## Manual launch checklist

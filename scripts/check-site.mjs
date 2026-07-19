@@ -23,6 +23,9 @@ for (const file of htmlFiles) {
   if (!/data-site-header/.test(html)) failures.push(`${file}: missing shared header mount`);
   if (!/data-site-footer/.test(html)) failures.push(`${file}: missing shared footer mount`);
   if (!/assets\/js\/site\.js/.test(html)) failures.push(`${file}: missing site script`);
+  if ((html.match(/GTM-K6LPRZ84/g) || []).length !== 2) failures.push(`${file}: Google Tag Manager snippets are incomplete`);
+  if (!/<head>\s*<!-- Google Tag Manager -->/.test(html)) failures.push(`${file}: Google Tag Manager is not first in head`);
+  if (!/<body>\s*<!-- Google Tag Manager \(noscript\) -->/.test(html)) failures.push(`${file}: GTM noscript is not first in body`);
   for (const match of html.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
     if (!existsSync(join(root, match[1]))) failures.push(`${file}: broken local asset ${match[1]}`);
   }

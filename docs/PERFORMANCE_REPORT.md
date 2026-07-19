@@ -22,7 +22,7 @@ Scores are local lab measurements and may vary between runs. Production compress
 
 - Static HTML delivery with no framework runtime
 - One shared CSS file and one small shared JavaScript file
-- No booking embed, map iframe, autoplay video, carousel library, or analytics SDK
+- No booking embed, map iframe, autoplay video, or carousel library; Google Tag Manager loads asynchronously
 - AVIF used for several major images
 - Optimized WebP derivatives and a responsive hero `srcset`
 - Below-the-fold images use native lazy loading

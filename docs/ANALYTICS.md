@@ -1,8 +1,8 @@
 # Analytics implementation
 
-No analytics vendor is enabled in the source build.
+Google Tag Manager container `GTM-K6LPRZ84` is installed in the `<head>` and immediately after `<body>` on every public HTML page.
 
-The website pushes privacy-safe events to `window.dataLayer`. Connecting a vendor later must include a consent and privacy review.
+The website pushes privacy-safe events to `window.dataLayer`. Tags configured inside Google Tag Manager must respect the visitor’s consent choice and the published privacy notice.
 
 ## Events
 
@@ -11,6 +11,8 @@ The website pushes privacy-safe events to `window.dataLayer`. Connecting a vendo
   - `booking_click_page`
   - `booking_click_device`
 - `maps_click`
+- `phone_click`
+- `whatsapp_click`
 - `fresha_profile_click`
 - `review_source_click`
 - `google_reviews_click`
