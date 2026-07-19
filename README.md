@@ -14,7 +14,7 @@ A production-ready, mobile-first website for Tiger Gents Salon at Lake Central T
 - Responsive service filtering
 - Keyboard-accessible navigation, gallery dialog, and FAQ
 - Reduced-motion support and mobile sticky booking actions
-- LocalBusiness, AggregateRating, and FAQ structured data
+- LocalBusiness and FAQ structured data
 - Sitemap, robots file, policy pages, and owner documentation
 - Privacy-ready analytics event hooks with no analytics vendor enabled by default
 
@@ -84,14 +84,16 @@ Search the project for `10:00 AM` and update:
 
 Review special or holiday hours before publishing.
 
-### Update the rating or review count
+### Update review ratings or links
 
-Update `rating` and `reviewCount` at the top of `assets/js/site.js`, then update:
+Update `rating` at the top of `assets/js/site.js`, then update:
 
 - homepage trust rail
 - homepage review section
 - homepage structured data
 - any review quotation whose source has changed
+
+The marketing site highlights Tiger Gents Salon’s five-star ratings on Fresha and Google.
 
 Only publish client feedback that the salon has permission to use.
 
@@ -122,8 +124,7 @@ Search for `f967e535` to find every direct Fresha booking URL. Run a manual clic
 
 The website currently presents:
 
-- Rating: 5.0
-- Review count: 77
+- Five-star reviews on Fresha and Google
 - Hours: Monday–Sunday, 10:00 AM–12:00 AM
 - Team: ABED, Shahem, Joe, Tiya
 - Instant confirmation and app payment shown

@@ -58,7 +58,7 @@ Use for:
 - Current prices
 - Current service durations
 - Team availability
-- Current rating and review count
+- Five-star ratings on Fresha and Google
 - Current opening hours
 - General appointment discovery
 - Salon-led content review before launch
@@ -105,7 +105,7 @@ These are inspiration only. Do not copy layouts, branding, copy, code, photos, i
 
 ### 2.5 Data validation rule
 
-The website must not present invented prices, offers, review totals, service durations, barber specialities, awards, product brands, parking promises, or availability.
+The website must not present invented prices, offers, ratings, service durations, barber specialities, awards, product brands, parking promises, or availability.
 
 The coding agent must:
 
@@ -124,8 +124,7 @@ This is an implementation snapshot and should be kept aligned with current salon
 - **Business:** Tiger Gents Salon
 - **Category:** Gents salon / barber and male grooming
 - **Location:** Lake Central Tower, Marasi Drive, Business Bay, Dubai
-- **Published Fresha rating at research time:** 5.0
-- **Published Fresha review count at research time:** 77
+- **Published Fresha and Google ratings:** 5 stars
 - **Published hours at research time:** Monday–Sunday, 10:00 AM–12:00 AM
 - **Published booking capabilities:** Instant confirmation and app payment
 - **Service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
@@ -1155,8 +1154,8 @@ Directly under hero or partially overlapping it on desktop.
 
 Display:
 
-- Fresha rating
-- Review count
+- Fresha five-star rating
+- Google five-star rating
 - Location
 - Opening hours
 - Instant confirmation
@@ -1255,7 +1254,7 @@ Use short text fragments and real process detail.
 
 ### 17.10 Reviews
 
-Show 3–5 salon-approved client reviews.
+Feature selected salon-approved client feedback.
 
 Requirements:
 
@@ -1865,7 +1864,6 @@ Use accurate schema such as:
 - `BarberShop`, if supported by the schema implementation
 - `PostalAddress`
 - `OpeningHoursSpecification`
-- `AggregateRating`, only when compliant and supported by current review data
 - `Service`
 - `Person` for team profiles
 - `BreadcrumbList`
@@ -1901,7 +1899,7 @@ The owner or administrator must be able to edit:
 - Photos
 - Hours
 - Review excerpts
-- Rating/review-count display
+- Five-star reputation display
 - Product brands
 - Gallery
 - FAQs
@@ -1969,7 +1967,6 @@ type BusinessDetails = {
   email?: string
   openingHours: OpeningHours[]
   rating?: number
-  reviewCount?: number
   dataReviewedAt: string
 }
 ```
@@ -2151,7 +2148,7 @@ Strong:
 Show:
 
 - Current Fresha rating
-- Current review count
+- Current Google rating
 - Real review excerpts
 - Real client results with consent
 - Team names and faces
@@ -2292,7 +2289,7 @@ Design all states:
 - CMS content unavailable
 - Long service name
 - Long review
-- Large review count
+- Long review-platform label
 - Special holiday hours
 - Temporary closure
 - Fully booked message only if real data exists
@@ -2540,7 +2537,7 @@ Provide a short owner guide explaining:
 - How to update prices
 - How to add a team member
 - How to replace images
-- How to update review count
+- How to update review links and rating copy
 - How to edit SEO fields
 - How to check Fresha links
 - How to publish changes

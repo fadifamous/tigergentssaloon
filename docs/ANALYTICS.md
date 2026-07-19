@@ -13,6 +13,7 @@ The website pushes privacy-safe events to `window.dataLayer`. Connecting a vendo
 - `maps_click`
 - `fresha_profile_click`
 - `review_source_click`
+- `google_reviews_click`
 - `service_category_select`
 - `gallery_open`
 - `cookie_choice`

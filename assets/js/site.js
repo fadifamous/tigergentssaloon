@@ -5,8 +5,7 @@ const BUSINESS = Object.freeze({
   freshaUrl:
     "https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s",
   mapUrl: "https://share.google/PqwDRzzGm2ZEVF8zT",
-  rating: "5.0",
-  reviewCount: 77,
+  rating: "5 stars",
   hours: "10:00 AM–12:00 AM"
 });
 
@@ -40,7 +39,7 @@ function renderHeader() {
     <div class="utility">
       <div class="container utility-inner">
         <span>Lake Central Tower · Business Bay, Dubai</span>
-        <span class="utility-rating">${BUSINESS.rating} on Fresha · ${BUSINESS.reviewCount} client reviews · Open daily ${BUSINESS.hours}</span>
+        <span class="utility-rating">${BUSINESS.rating} on Fresha & Google · Open daily ${BUSINESS.hours}</span>
       </div>
     </div>
     <header class="site-header" data-header>
@@ -104,7 +103,7 @@ function renderFooter() {
         </div>
         <div class="footer-bottom">
           <span>© <span data-year></span> Tiger Gents Salon. All rights reserved.</span>
-          <span>Book online with Fresha · Lake Central Tower, Business Bay.</span>
+          <span>5-star reviews on Fresha and Google.</span>
         </div>
       </div>
     </footer>`;
