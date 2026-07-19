@@ -10,7 +10,7 @@ A production-ready, mobile-first website for Tiger Gents Salon at Lake Central T
 - Transparent primary logo, favicon, app icons, OG image, and email export
 - Service prices and durations stored in `assets/js/services-data.js`
 - Setmore booking links on all high-intent actions
-- Click-to-call and persistent mobile WhatsApp actions for +971 56 228 5900
+- Click-to-call, desktop-header WhatsApp, and persistent mobile WhatsApp actions for +971 56 228 5900
 - Google Maps direction links
 - Responsive service filtering
 - Keyboard-accessible navigation, gallery dialog, and FAQ

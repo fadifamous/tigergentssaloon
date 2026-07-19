@@ -83,6 +83,30 @@ try {
     throw new Error(`Primary logo failed source, intrinsic-dimension, or fit checks: ${JSON.stringify(logoData)}`);
   }
 
+  const desktopWhatsapp = page.locator(".header-whatsapp");
+  if (!(await desktopWhatsapp.isVisible())) throw new Error("Desktop WhatsApp action is not visible.");
+  if ((await desktopWhatsapp.getAttribute("href")) !== "https://wa.me/971562285900") {
+    throw new Error("Desktop WhatsApp action has an incorrect destination.");
+  }
+  if ((await desktopWhatsapp.getAttribute("data-whatsapp-location")) !== "header") {
+    throw new Error("Desktop WhatsApp action is missing its analytics location.");
+  }
+  await page.evaluate(() => {
+    window.dataLayer = [];
+  });
+  await desktopWhatsapp.evaluate((link) => link.addEventListener("click", (event) => event.preventDefault(), { once: true }));
+  await desktopWhatsapp.click();
+  const desktopWhatsappEvent = await page.evaluate(() =>
+    window.dataLayer.find((item) => item.event === "whatsapp_click")
+  );
+  if (
+    !desktopWhatsappEvent ||
+    desktopWhatsappEvent.whatsapp_click_location !== "header" ||
+    desktopWhatsappEvent.page !== "index.html"
+  ) {
+    throw new Error(`Desktop WhatsApp analytics event is incorrect: ${JSON.stringify(desktopWhatsappEvent)}`);
+  }
+
   await page.goto(`${base}/services.html`, { waitUntil: "networkidle" });
   const allCount = await page.locator(".service-row:not([hidden])").count();
   await page.getByRole("button", { name: "Nail care" }).click();
@@ -96,6 +120,28 @@ try {
   await page.keyboard.press("Escape");
 
   mkdirSync("test-artifacts", { recursive: true });
+  for (const width of [1120, 821]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(base, { waitUntil: "networkidle" });
+    if (!(await page.locator(".header-whatsapp").isVisible())) {
+      throw new Error(`Desktop WhatsApp action is hidden at ${width}px.`);
+    }
+    if (!(await page.locator(".header-book").isVisible())) {
+      throw new Error(`Primary booking action is hidden at ${width}px.`);
+    }
+    const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+    if (hasOverflow) throw new Error(`Homepage has horizontal overflow at ${width}px.`);
+  }
+  await page.setViewportSize({ width: 820, height: 900 });
+  await page.goto(base, { waitUntil: "networkidle" });
+  if (await page.locator(".header-whatsapp").isVisible()) {
+    throw new Error("Desktop WhatsApp action remains visible after the mobile sticky action takes over.");
+  }
+  if (!(await page.locator('.mobile-actions [data-track="whatsapp_click"]').isVisible())) {
+    throw new Error("Mobile WhatsApp action is not visible at the responsive handoff.");
+  }
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(base, { waitUntil: "networkidle" });
   await primeScrollReveals(page);
   await page.screenshot({ path: "test-artifacts/home-desktop.png", fullPage: true });
@@ -129,9 +175,13 @@ try {
   await mobilePage.keyboard.press("Escape");
   if ((await mobilePage.locator(".menu-toggle").getAttribute("aria-expanded")) !== "false") throw new Error("Mobile menu failed to close.");
   const bookingHref = await mobilePage.locator(".mobile-actions .js-booking").getAttribute("href");
-  const whatsappHref = await mobilePage.locator('.mobile-actions [data-track="whatsapp_click"]').getAttribute("href");
+  const mobileWhatsapp = mobilePage.locator('.mobile-actions [data-track="whatsapp_click"]');
+  const whatsappHref = await mobileWhatsapp.getAttribute("href");
   if (bookingHref !== "https://tigergentssaloon.setmore.com") throw new Error("Mobile booking action does not use Setmore.");
   if (whatsappHref !== "https://wa.me/971562285900") throw new Error("Mobile WhatsApp action is incorrect.");
+  if ((await mobileWhatsapp.getAttribute("data-whatsapp-location")) !== "mobile_sticky") {
+    throw new Error("Mobile WhatsApp action is missing its analytics location.");
+  }
   const overflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
   if (overflow) throw new Error("Homepage has horizontal overflow at 390px.");
   await primeScrollReveals(mobilePage);
@@ -142,6 +192,11 @@ try {
   await mobilePage.goto(`${base}/contact.html`, { waitUntil: "networkidle" });
   const phoneLink = mobilePage.locator('.contact-direct a[href="tel:+971562285900"]');
   if (!(await phoneLink.isVisible())) throw new Error("Contact phone number is not visible on mobile.");
+  if (
+    (await mobilePage.locator('[data-track="whatsapp_click"][data-whatsapp-location="contact_support"]').count()) !== 1
+  ) {
+    throw new Error("Contact WhatsApp action is missing its analytics location.");
+  }
   await primeScrollReveals(mobilePage);
   await mobilePage.screenshot({ path: "test-artifacts/contact-mobile.png", fullPage: true });
   await mobile.close();

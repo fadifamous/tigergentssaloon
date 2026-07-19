@@ -51,6 +51,10 @@ function renderHeader() {
           <ul class="nav-list">${links}</ul>
         </nav>
         <div class="header-actions">
+          <a class="button button-secondary header-whatsapp" href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="header" aria-label="Chat with Tiger Gents Salon on WhatsApp">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.84 9.84 0 0 0-8.46 14.86L2 22l5.28-1.5A9.9 9.9 0 1 0 12 2Zm0 17.8a7.8 7.8 0 0 1-3.98-1.08l-.28-.17-3.13.89.91-3.04-.18-.3A7.78 7.78 0 1 1 12 19.8Zm4.27-5.83c-.23-.12-1.38-.68-1.6-.76-.21-.08-.37-.12-.52.12-.16.23-.6.76-.74.91-.14.16-.27.18-.5.06-1.38-.69-2.29-1.23-3.2-2.8-.24-.41.24-.38.69-1.27.08-.16.04-.29-.02-.41-.06-.12-.52-1.26-.72-1.72-.19-.46-.38-.39-.52-.4h-.45c-.16 0-.41.06-.63.29-.21.23-.82.8-.82 1.96s.84 2.28.96 2.44c.12.15 1.66 2.53 4.02 3.55 1.49.64 2.08.7 2.83.59.46-.07 1.38-.57 1.58-1.11.19-.55.19-1.02.13-1.12-.05-.1-.21-.16-.45-.28Z"/></svg>
+            <span>WhatsApp</span>
+          </a>
           ${bookingLink("Book appointment", "header", "button header-book")}
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Open navigation menu"><span></span></button>
         </div>
@@ -94,7 +98,7 @@ function renderFooter() {
             <p class="footer-heading">Book & policies</p>
             <ul class="footer-links">
               <li><a class="js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="footer">Book online ↗</a></li>
-              <li><a href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click">WhatsApp us ↗</a></li>
+              <li><a href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="footer">WhatsApp us ↗</a></li>
               <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click">Call us</a></li>
               <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="google_reviews_click">Reviews on Google ↗</a></li>
               <li><a href="privacy.html">Privacy</a></li>
@@ -119,7 +123,7 @@ function renderMobileActions() {
   mount.setAttribute("aria-label", "Quick actions");
   mount.innerHTML = `
     ${bookingLink("Book appointment", "mobile_sticky")}
-    <a class="button button-whatsapp" href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" aria-label="Chat with Tiger Gents Salon on WhatsApp">
+    <a class="button button-whatsapp" href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="mobile_sticky" aria-label="Chat with Tiger Gents Salon on WhatsApp">
       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.84 9.84 0 0 0-8.46 14.86L2 22l5.28-1.5A9.9 9.9 0 1 0 12 2Zm0 17.8a7.8 7.8 0 0 1-3.98-1.08l-.28-.17-3.13.89.91-3.04-.18-.3A7.78 7.78 0 1 1 12 19.8Zm4.27-5.83c-.23-.12-1.38-.68-1.6-.76-.21-.08-.37-.12-.52.12-.16.23-.6.76-.74.91-.14.16-.27.18-.5.06-1.38-.69-2.29-1.23-3.2-2.8-.24-.41.24-.38.69-1.27.08-.16.04-.29-.02-.41-.06-.12-.52-1.26-.72-1.72-.19-.46-.38-.39-.52-.4h-.45c-.16 0-.41.06-.63.29-.21.23-.82.8-.82 1.96s.84 2.28.96 2.44c.12.15 1.66 2.53 4.02 3.55 1.49.64 2.08.7 2.83.59.46-.07 1.38-.57 1.58-1.11.19-.55.19-1.02.13-1.12-.05-.1-.21-.16-.45-.28Z"/></svg>
       <span>WhatsApp</span>
     </a>`;
@@ -186,7 +190,13 @@ function initTracking() {
       });
     }
     const tracked = event.target.closest("[data-track]");
-    if (tracked) track(tracked.dataset.track, { page });
+    if (tracked) {
+      const details = { page };
+      if (tracked.dataset.track === "whatsapp_click") {
+        details.whatsapp_click_location = tracked.dataset.whatsappLocation || "unknown";
+      }
+      track(tracked.dataset.track, details);
+    }
   });
 }
 
