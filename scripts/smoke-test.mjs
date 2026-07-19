@@ -60,6 +60,22 @@ try {
     if (!(await page.locator(".site-footer").count())) throw new Error(`${path}: footer did not render`);
   }
 
+  await page.goto(base, { waitUntil: "networkidle" });
+  const logoData = await page.locator(".brand img").evaluate((image) => ({
+    naturalWidth: image.naturalWidth,
+    naturalHeight: image.naturalHeight,
+    source: image.getAttribute("src"),
+    objectFit: getComputedStyle(image).objectFit
+  }));
+  if (
+    logoData.source !== "assets/brand/logo_transparent.png" ||
+    logoData.naturalWidth !== 1535 ||
+    logoData.naturalHeight !== 1024 ||
+    logoData.objectFit !== "contain"
+  ) {
+    throw new Error(`Primary logo failed source, intrinsic-dimension, or fit checks: ${JSON.stringify(logoData)}`);
+  }
+
   await page.goto(`${base}/services.html`, { waitUntil: "networkidle" });
   const allCount = await page.locator(".service-row:not([hidden])").count();
   await page.getByRole("button", { name: "Nail care" }).click();

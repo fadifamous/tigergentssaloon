@@ -322,21 +322,25 @@ h3 {
   width: min(1440px, calc(100% - 40px));
   height: 100%;
   margin-inline: auto;
-  grid-template-columns: 174px 1fr auto;
+  grid-template-columns: 120px 1fr auto;
   align-items: center;
   gap: 30px;
 }
 
 .brand {
   display: inline-flex;
-  height: 64px;
+  width: 105px;
+  height: 70px;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
 .brand img {
-  width: 174px;
-  transform: scale(1.15);
+  display: block;
+  width: 105px;
+  height: 70px;
+  object-fit: contain;
 }
 
 .site-nav {
@@ -1024,7 +1028,7 @@ h3 {
   font-size: 1.4rem;
 }
 
-.verified-note {
+.service-note {
   display: flex;
   padding: 20px 0;
   border-top: var(--border);
@@ -1198,7 +1202,10 @@ h3 {
 }
 
 .footer-brand img {
+  display: block;
   width: 210px;
+  height: 140px;
+  object-fit: contain;
 }
 
 .footer-brand p {
@@ -1327,7 +1334,7 @@ h3 {
   }
 
   .header-inner {
-    grid-template-columns: 160px 1fr auto;
+    grid-template-columns: 120px 1fr auto;
   }
 
   .menu-toggle {
@@ -1421,16 +1428,18 @@ h3 {
 
   .header-inner {
     width: calc(100% - 32px);
-    grid-template-columns: 132px 1fr auto;
+    grid-template-columns: 96px 1fr auto;
     gap: 10px;
   }
 
   .brand {
-    height: 54px;
+    width: 87px;
+    height: 58px;
   }
 
   .brand img {
-    width: 145px;
+    width: 87px;
+    height: 58px;
   }
 
   .header-book {
@@ -1592,7 +1601,7 @@ h3 {
   }
 
   .header-inner {
-    grid-template-columns: 146px 1fr auto;
+    grid-template-columns: 96px 1fr auto;
   }
 
   .trust-item strong {
@@ -1646,7 +1655,7 @@ h3 {
     flex-direction: column;
   }
 
-  .verified-note {
+  .service-note {
     flex-direction: column;
   }
 }

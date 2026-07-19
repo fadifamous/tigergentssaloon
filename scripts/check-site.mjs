@@ -7,7 +7,7 @@ const required = [
   "gallery.html", "about.html", "contact.html", "faq.html", "privacy.html",
   "cookies.html", "terms.html", "accessibility.html", "404.html", "robots.txt",
   "sitemap.xml", "assets/css/styles.css", "assets/js/site.js",
-  "assets/brand/tiger-logo-original.png", "assets/brand/tiger-logo-transparent.png"
+  "assets/brand/logo_transparent.png", "assets/brand/logoblackbackground.png"
 ];
 
 const failures = [];

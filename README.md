@@ -7,8 +7,8 @@ A production-ready, mobile-first website for Tiger Gents Salon at Lake Central T
 - 14 accessible HTML pages, including a custom 404
 - Responsive premium design system
 - Supplied salon photography and primary logo
-- Transparent web-ready logo derivative, favicon, app icons, OG image, and email export
-- Verified service prices and durations stored in `assets/js/services-data.js`
+- Transparent primary logo, favicon, app icons, OG image, and email export
+- Service prices and durations stored in `assets/js/services-data.js`
 - Fresha booking links on all high-intent actions
 - Google Maps direction links
 - Responsive service filtering
@@ -70,7 +70,7 @@ Edit `assets/js/services-data.js`. Each record has:
 
 The Services page is generated from this file. Featured homepage services are intentionally hand-curated in `index.html`, so update those cards separately when a featured service changes.
 
-Verify all service changes against Fresha and update the visible verification date.
+Keep service changes aligned with the salon’s current Fresha catalogue.
 
 ### Update hours
 
@@ -82,22 +82,22 @@ Search the project for `10:00 AM` and update:
 - FAQ
 - homepage structured data
 
-Verify special or holiday hours on Fresha before publishing.
+Review special or holiday hours before publishing.
 
 ### Update the rating or review count
 
-Update `rating`, `reviewCount`, and `verifiedAt` at the top of `assets/js/site.js`, then update:
+Update `rating` and `reviewCount` at the top of `assets/js/site.js`, then update:
 
 - homepage trust rail
 - homepage review section
 - homepage structured data
 - any review quotation whose source has changed
 
-Never publish an anonymous or unverified review.
+Only publish client feedback that the salon has permission to use.
 
 ### Add a team member
 
-Add the member to `team.html` and the homepage team section. Only publish supplied or verified role, biography, speciality, language, experience, portrait, or rating information.
+Add the member to `team.html` and the homepage team section. Use salon-approved role, biography, speciality, language, experience, portrait, and rating information.
 
 ### Replace images
 
@@ -118,9 +118,9 @@ Search for `f967e535` to find every direct Fresha booking URL. Run a manual clic
 3. Commit only the intended files.
 4. Push to `main` or open a review branch, depending on the hosting workflow.
 
-## Business data source
+## Current salon details
 
-Fresha was verified on 19 July 2026:
+The website currently presents:
 
 - Rating: 5.0
 - Review count: 77
@@ -128,13 +128,13 @@ Fresha was verified on 19 July 2026:
 - Team: ABED, Shahem, Joe, Tiya
 - Instant confirmation and app payment shown
 
-Fresha remains the live source of truth.
+Keep these details aligned with the salon’s services and booking setup.
 
 ## Project structure
 
 ```text
 assets/
-  brand/       Logo source, transparent derivative, icons, and social exports
+  brand/       Primary logo, alternate logo, icons, and social exports
   css/         Design system and responsive layout
   images/      Supplied salon photography
   js/          Shared behavior and structured service data
@@ -145,7 +145,7 @@ scripts/       Project integrity check
 
 ## Important launch notes
 
-- No phone, WhatsApp, email, social URL, team biographies, team portraits, product-brand claims, parking claims, or legal business name were supplied. The build deliberately does not invent them.
+- Add phone, WhatsApp, email, social links, team biographies, team portraits, product-brand details, parking information, or legal business information when the salon chooses to publish them.
 - No analytics vendor is enabled. Event hooks populate `window.dataLayer` only and do not transmit data.
-- The supplied primary logo is retained as `assets/brand/tiger-logo-original.png`. `tiger-logo-transparent.png` is the web-ready background-extracted derivative.
+- The visible primary logo is `assets/brand/logo_transparent.png` (1535×1024 RGBA). `assets/brand/logoblackbackground.png` is retained as an alternate.
 - Manrope and Bodoni Moda are self-hosted from open-source variable-font files; retain the font licence files in `assets/fonts/`.

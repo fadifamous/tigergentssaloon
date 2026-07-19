@@ -7,8 +7,7 @@ const BUSINESS = Object.freeze({
   mapUrl: "https://share.google/PqwDRzzGm2ZEVF8zT",
   rating: "5.0",
   reviewCount: 77,
-  hours: "10:00 AM–12:00 AM",
-  verifiedAt: "2026-07-19"
+  hours: "10:00 AM–12:00 AM"
 });
 
 const navItems = [
@@ -41,13 +40,13 @@ function renderHeader() {
     <div class="utility">
       <div class="container utility-inner">
         <span>Lake Central Tower · Business Bay, Dubai</span>
-        <span class="utility-rating">${BUSINESS.rating} on Fresha · ${BUSINESS.reviewCount} verified reviews · Open daily ${BUSINESS.hours}</span>
+        <span class="utility-rating">${BUSINESS.rating} on Fresha · ${BUSINESS.reviewCount} client reviews · Open daily ${BUSINESS.hours}</span>
       </div>
     </div>
     <header class="site-header" data-header>
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Tiger Gents Salon home">
-          <img src="assets/brand/tiger-logo-original.png" alt="Tiger Gents Salon" width="1536" height="1024">
+          <img src="assets/brand/logo_transparent.png" alt="Tiger Gents Salon" width="1535" height="1024">
         </a>
         <nav class="site-nav" id="site-navigation" aria-label="Primary navigation">
           <ul class="nav-list">${links}</ul>
@@ -68,7 +67,7 @@ function renderFooter() {
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <img src="assets/brand/tiger-logo-original.png" alt="Tiger Gents Salon" width="1536" height="1024" loading="lazy">
+            <img src="assets/brand/logo_transparent.png" alt="Tiger Gents Salon" width="1535" height="1024" loading="lazy">
             <p>Premium grooming, personal attention, and dependable service standards in the heart of Business Bay.</p>
           </div>
           <div>
@@ -105,7 +104,7 @@ function renderFooter() {
         </div>
         <div class="footer-bottom">
           <span>© <span data-year></span> Tiger Gents Salon. All rights reserved.</span>
-          <span>Business information verified against Fresha on 19 July 2026.</span>
+          <span>Book online with Fresha · Lake Central Tower, Business Bay.</span>
         </div>
       </div>
     </footer>`;

@@ -61,7 +61,7 @@ Use for:
 - Current rating and review count
 - Current opening hours
 - General appointment discovery
-- Source-of-truth verification before launch
+- Salon-led content review before launch
 
 ### 2.2 Direct booking link
 
@@ -109,7 +109,7 @@ The website must not present invented prices, offers, review totals, service dur
 
 The coding agent must:
 
-1. Verify all changeable information against Fresha immediately before launch.
+1. Review all changeable information against the salon’s current Fresha setup immediately before launch.
 2. Keep editable information in a CMS, configuration file, or structured data source.
 3. Label any draft content clearly as placeholder.
 4. Never display fake scarcity such as “only one slot left” unless supplied by a real booking API.
@@ -119,7 +119,7 @@ The coding agent must:
 
 ## 3. Current Business Snapshot for Initial Build
 
-This is an implementation snapshot, not a permanent source of truth.
+This is an implementation snapshot and should be kept aligned with current salon information.
 
 - **Business:** Tiger Gents Salon
 - **Category:** Gents salon / barber and male grooming
@@ -128,7 +128,7 @@ This is an implementation snapshot, not a permanent source of truth.
 - **Published Fresha review count at research time:** 77
 - **Published hours at research time:** Monday–Sunday, 10:00 AM–12:00 AM
 - **Published booking capabilities:** Instant confirmation and app payment
-- **Published service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
+- **Service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
 
 All of the above must be checked again before production launch.
 
@@ -156,7 +156,7 @@ Each card must support:
 - Optional specialities
 - Optional languages
 - Optional years of experience
-- Optional rating only when verifiable
+- Optional rating when approved for publication
 - “Book with [Name]” action
 - Link to the Fresha booking flow
 - Accessible alt text
@@ -1077,8 +1077,8 @@ Desktop optional; mobile omit unless necessary.
 Content:
 
 - Business Bay, Dubai
-- Open daily 10 AM–12 AM, once reverified
-- 5.0 Fresha rating, once dynamically or manually verified
+- Open daily 10 AM–12 AM
+- 5.0 Fresha rating
 
 Keep quiet and concise.
 
@@ -1124,7 +1124,7 @@ Trust line:
 
 > 5.0 on Fresha · Open daily · Instant confirmation
 
-Only show verified values.
+Only show current salon-approved values.
 
 #### Visual
 
@@ -1255,7 +1255,7 @@ Use short text fragments and real process detail.
 
 ### 17.10 Reviews
 
-Show 3–5 verified reviews.
+Show 3–5 salon-approved client reviews.
 
 Requirements:
 
@@ -1355,7 +1355,7 @@ Requirements:
 
 ### 18.2 Categories
 
-Use verified Fresha categories such as:
+Use current salon service categories such as:
 
 - Hair
 - Shaving
@@ -1394,7 +1394,7 @@ Price
 Optional “from” qualifier
 Optional recommended-for
 Booking URL
-Last verified date
+Last content review date
 ```
 
 ### 18.5 Service page rules
@@ -1435,7 +1435,7 @@ Last verified date
 - Review excerpts mentioning the team member
 - Booking CTA
 
-Only publish supplied or verified details.
+Only publish salon-approved details.
 
 ---
 
@@ -1865,7 +1865,7 @@ Use accurate schema such as:
 - `BarberShop`, if supported by the schema implementation
 - `PostalAddress`
 - `OpeningHoursSpecification`
-- `AggregateRating`, only when compliant and verifiable
+- `AggregateRating`, only when compliant and supported by current review data
 - `Service`
 - `Person` for team profiles
 - `BreadcrumbList`
@@ -1881,7 +1881,7 @@ Do not mark up reviews or ratings in ways that violate search-engine policies.
 
 > Premium haircuts, beard grooming, nail care, facials and men’s grooming at Tiger Gents Salon, Lake Central Tower, Business Bay. Book online through Fresha.
 
-Verify character length during implementation.
+Check character length during implementation.
 
 ---
 
@@ -1927,7 +1927,7 @@ type Service = {
   featured: boolean
   bookingUrl: string
   image?: Media
-  lastVerifiedAt: string
+  lastReviewedAt: string
 }
 
 type TeamMember = {
@@ -1953,7 +1953,7 @@ type Review = {
   quote?: string
   publishedAt?: string
   sourceUrl: string
-  verifiedAt: string
+  reviewedAt: string
 }
 
 type BusinessDetails = {
@@ -1970,7 +1970,7 @@ type BusinessDetails = {
   openingHours: OpeningHours[]
   rating?: number
   reviewCount?: number
-  dataVerifiedAt: string
+  dataReviewedAt: string
 }
 ```
 
@@ -2150,8 +2150,8 @@ Strong:
 
 Show:
 
-- Verified Fresha rating
-- Verified review count
+- Current Fresha rating
+- Current review count
 - Real review excerpts
 - Real client results with consent
 - Team names and faces
@@ -2159,7 +2159,7 @@ Show:
 Avoid:
 
 - Logo-wall clutter
-- Unverified celebrity claims
+- Unsupported celebrity claims
 - Anonymous testimonials
 - Fake five-star graphics without source
 
@@ -2435,10 +2435,10 @@ The website is ready for launch only when:
 
 - [ ] Fresha links tested
 - [ ] Google Maps link tested
-- [ ] Services, prices, and durations verified
-- [ ] Hours verified
-- [ ] Team names and roles verified
-- [ ] Reviews verified
+- [ ] Services, prices, and durations reviewed
+- [ ] Hours reviewed
+- [ ] Team names and roles reviewed
+- [ ] Reviews approved for publication
 - [ ] All placeholders removed
 - [ ] Product claims approved
 - [ ] Policies published
@@ -2553,7 +2553,7 @@ Provide a short owner guide explaining:
 
 - Logo refinement
 - Design system
-- Content verification
+- Content review
 - Information architecture
 - Homepage
 - Services
@@ -2605,7 +2605,7 @@ The specification applies the following established principles:
 
 ## 43. Research and Reference Sources
 
-These references informed the requirements. Verify current details before implementation.
+These references informed the requirements. Review current salon details before implementation.
 
 ### Business and competitor references
 
