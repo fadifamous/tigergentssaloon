@@ -47,7 +47,7 @@ function renderHeader() {
     <header class="site-header" data-header>
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Tiger Gents Salon home">
-          <img src="assets/brand/tiger-logo-web.webp" alt="Tiger Gents Salon" width="400" height="267">
+          <img src="assets/brand/tiger-logo-original.png" alt="Tiger Gents Salon" width="1536" height="1024">
         </a>
         <nav class="site-nav" id="site-navigation" aria-label="Primary navigation">
           <ul class="nav-list">${links}</ul>
@@ -68,7 +68,7 @@ function renderFooter() {
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <img src="assets/brand/tiger-logo-web.webp" alt="Tiger Gents Salon" width="400" height="267" loading="lazy">
+            <img src="assets/brand/tiger-logo-original.png" alt="Tiger Gents Salon" width="1536" height="1024" loading="lazy">
             <p>Premium grooming, personal attention, and dependable service standards in the heart of Business Bay.</p>
           </div>
           <div>
