@@ -46,10 +46,10 @@ The experience should balance:
 
 Treat these links as business-owned or approved sources.
 
-### 2.1 Main Fresha profile
+### 2.1 Main booking profile
 
 ```text
-https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s
+https://tigergentssaloon.setmore.com
 ```
 
 Use for:
@@ -58,7 +58,7 @@ Use for:
 - Current prices
 - Current service durations
 - Team availability
-- Five-star ratings on Fresha and Google
+- Five-star rating on Google
 - Current opening hours
 - General appointment discovery
 - Salon-led content review before launch
@@ -124,7 +124,7 @@ This is an implementation snapshot and should be kept aligned with current salon
 - **Business:** Tiger Gents Salon
 - **Category:** Gents salon / barber and male grooming
 - **Location:** Lake Central Tower, Marasi Drive, Business Bay, Dubai
-- **Published Fresha and Google ratings:** 5 stars
+- **Published Google rating:** 5 stars
 - **Published hours at research time:** Monday–Sunday, 10:00 AM–12:00 AM
 - **Booking capabilities:** Online appointment selection and confirmation
 - **Service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
@@ -1077,7 +1077,7 @@ Content:
 
 - Business Bay, Dubai
 - Open daily 10 AM–12 AM
-- 5.0 Fresha rating
+- 5.0 Google rating
 
 Keep quiet and concise.
 
@@ -1121,7 +1121,7 @@ Secondary CTA:
 
 Trust line:
 
-> 5.0 on Fresha · Open daily · Instant confirmation
+> 5.0 on Google · Open daily · Instant confirmation
 
 Only show current salon-approved values.
 
@@ -1154,8 +1154,8 @@ Directly under hero or partially overlapping it on desktop.
 
 Display:
 
-- Fresha five-star rating
 - Google five-star rating
+- Current Google review count
 - Location
 - Opening hours
 - Instant confirmation
@@ -1258,12 +1258,12 @@ Feature selected salon-approved client feedback.
 
 Requirements:
 
-- Source label: Fresha
+- Source label: Google
 - Review date if available
 - Reviewer name as published
 - Exact text or approved excerpt
 - Rating
-- Link to Fresha profile
+- Link to Google review profile
 - Never edit review meaning
 - Never fabricate a testimonial
 - Update periodically
@@ -1945,7 +1945,7 @@ type TeamMember = {
 
 type Review = {
   id: string
-  source: "Fresha"
+  source: "Google"
   author: string
   rating: number
   quote?: string
@@ -1960,7 +1960,7 @@ type BusinessDetails = {
   locality: string
   country: string
   mapUrl: string
-  freshaProfileUrl: string
+  googleProfileUrl: string
   bookingUrl: string
   phone?: string
   whatsapp?: string
@@ -2147,8 +2147,8 @@ Strong:
 
 Show:
 
-- Current Fresha rating
 - Current Google rating
+- Current Google review count
 - Real review excerpts
 - Real client results with consent
 - Team names and faces
@@ -2306,7 +2306,7 @@ Use GA4, Plausible, Fathom, or another approved platform.
 
 ```text
 booking_click
-fresha_profile_click
+google_reviews_click
 maps_click
 phone_click
 whatsapp_click
@@ -2314,7 +2314,6 @@ service_view
 service_category_select
 team_member_view
 team_member_booking_click
-review_source_click
 gallery_open
 video_play
 video_pause
@@ -2605,9 +2604,6 @@ The specification applies the following established principles:
 These references informed the requirements. Review current salon details before implementation.
 
 ### Business and competitor references
-
-- Tiger Gents Salon on Fresha  
-  https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s
 
 - Tiger Gents Salon direct booking  
   https://tigergentssaloon.setmore.com

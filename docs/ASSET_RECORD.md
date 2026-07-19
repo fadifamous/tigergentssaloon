@@ -5,7 +5,7 @@
 - `assets/brand/logo_transparent.png` — primary transparent logo used in the website header and footer
 - `assets/brand/logoblackbackground.png` — alternate logo with a black background
 - `assets/brand/tiger-logo-original.png` — earlier logo source retained in the project
-- Salon photography in `assets/images/` — supplied by the client and/or sourced from the business-owned Fresha profile files provided in the project folder
+- Salon photography in `assets/images/` — supplied by the client and/or sourced from business-owned profile files provided in the project folder
 
 The owner should retain model/client releases and photographer permissions outside the public repository.
 

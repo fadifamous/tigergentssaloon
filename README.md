@@ -94,7 +94,7 @@ Update `rating` at the top of `assets/js/site.js`, then update:
 - homepage structured data
 - any review quotation whose source has changed
 
-The marketing site highlights Tiger Gents Salon’s five-star ratings on Fresha and Google.
+The marketing site highlights Tiger Gents Salon’s five-star Google rating.
 
 Only publish client feedback that the salon has permission to use.
 
@@ -125,7 +125,7 @@ Search for `tigergentssaloon.setmore.com` to find every direct booking URL. Run 
 
 The website currently presents:
 
-- Five-star reviews on Fresha and Google
+- Five-star reviews on Google
 - Hours: Monday–Sunday, 10:00 AM–12:00 AM
 - Team: ABED, Shahem, Joe, Tiya
 - Phone and WhatsApp: +971 56 228 5900

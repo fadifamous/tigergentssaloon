@@ -11,11 +11,13 @@ const required = [
 ];
 
 const failures = [];
+const retiredPlatformPattern = /\x66\x72\x65\x73\x68\x61/i;
 for (const file of required) if (!existsSync(join(root, file))) failures.push(`Missing: ${file}`);
 
 const htmlFiles = readdirSync(root).filter((file) => extname(file) === ".html");
 for (const file of htmlFiles) {
   const html = readFileSync(join(root, file), "utf8");
+  if (retiredPlatformPattern.test(html)) failures.push(`${file}: contains a retired booking-platform reference`);
   if (!/<title>[^<]+<\/title>/.test(html)) failures.push(`${file}: missing title`);
   if (!/name="description"/.test(html)) failures.push(`${file}: missing meta description`);
   if (!/href="#main-content"/.test(html)) failures.push(`${file}: missing skip link`);
@@ -29,6 +31,11 @@ for (const file of htmlFiles) {
   for (const match of html.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
     if (!existsSync(join(root, match[1]))) failures.push(`${file}: broken local asset ${match[1]}`);
   }
+}
+
+const sharedSiteScript = readFileSync(join(root, "assets/js/site.js"), "utf8");
+if (retiredPlatformPattern.test(sharedSiteScript)) {
+  failures.push("assets/js/site.js: contains a retired booking-platform reference");
 }
 
 if (failures.length) {

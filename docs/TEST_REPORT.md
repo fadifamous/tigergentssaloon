@@ -42,4 +42,4 @@ Latest local results:
 
 ## Production follow-up
 
-Run final cross-browser and assistive-technology testing on the deployed URL. External Setmore, WhatsApp, Fresha review, and Google Maps behavior must also be rechecked immediately before launch.
+Run final cross-browser and assistive-technology testing on the deployed URL. External Setmore, WhatsApp, Google Reviews, and Google Maps behavior must also be rechecked immediately before launch.

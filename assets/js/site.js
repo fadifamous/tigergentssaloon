@@ -1,8 +1,6 @@
 const BUSINESS = Object.freeze({
   name: "Tiger Gents Salon",
   bookingUrl: "https://tigergentssaloon.setmore.com",
-  freshaUrl:
-    "https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s",
   mapUrl: "https://share.google/PqwDRzzGm2ZEVF8zT",
   phoneDisplay: "+971 56 228 5900",
   phoneUrl: "tel:+971562285900",
@@ -41,7 +39,7 @@ function renderHeader() {
     <div class="utility">
       <div class="container utility-inner">
         <span>Lake Central Tower · Business Bay, Dubai · <a class="utility-contact" href="${BUSINESS.phoneUrl}" data-track="phone_click">${BUSINESS.phoneDisplay}</a></span>
-        <span class="utility-rating">${BUSINESS.rating} on Fresha & Google · Open daily ${BUSINESS.hours}</span>
+        <span class="utility-rating">${BUSINESS.rating} on Google · Open daily ${BUSINESS.hours}</span>
       </div>
     </div>
     <header class="site-header" data-header>
@@ -98,7 +96,7 @@ function renderFooter() {
               <li><a class="js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="footer">Book online ↗</a></li>
               <li><a href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click">WhatsApp us ↗</a></li>
               <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click">Call us</a></li>
-              <li><a href="${BUSINESS.freshaUrl}" target="_blank" rel="noopener noreferrer" data-track="fresha_profile_click">Reviews on Fresha ↗</a></li>
+              <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="google_reviews_click">Reviews on Google ↗</a></li>
               <li><a href="privacy.html">Privacy</a></li>
               <li><a href="cookies.html">Cookies</a></li>
               <li><a href="terms.html">Booking terms</a></li>
@@ -108,7 +106,7 @@ function renderFooter() {
         </div>
         <div class="footer-bottom">
           <span>© <span data-year></span> Tiger Gents Salon. All rights reserved.</span>
-          <span>5-star reviews on Fresha and Google.</span>
+          <span>5-star reviews on Google.</span>
         </div>
       </div>
     </footer>`;
