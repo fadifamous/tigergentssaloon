@@ -28,6 +28,9 @@ for (const file of htmlFiles) {
   if ((html.match(/GTM-K6LPRZ84/g) || []).length !== 2) failures.push(`${file}: Google Tag Manager snippets are incomplete`);
   if (!/<head>\s*<!-- Google Tag Manager -->/.test(html)) failures.push(`${file}: Google Tag Manager is not first in head`);
   if (!/<body>\s*<!-- Google Tag Manager \(noscript\) -->/.test(html)) failures.push(`${file}: GTM noscript is not first in body`);
+  for (const match of html.matchAll(/<a\b[^>]*data-track="phone_click"[^>]*>/g)) {
+    if (!/data-phone-location="[^"]+"/.test(match[0])) failures.push(`${file}: tracked phone link is missing its location`);
+  }
   for (const match of html.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
     if (!existsSync(join(root, match[1]))) failures.push(`${file}: broken local asset ${match[1]}`);
   }
@@ -47,6 +50,9 @@ if (!/data-track="google_reviews_click"/.test(homepage)) {
 const sharedSiteScript = readFileSync(join(root, "assets/js/site.js"), "utf8");
 if (retiredPlatformPattern.test(sharedSiteScript)) {
   failures.push("assets/js/site.js: contains a retired booking-platform reference");
+}
+for (const match of sharedSiteScript.matchAll(/<a\b[^>]*data-track="phone_click"[^>]*>/g)) {
+  if (!/data-phone-location="[^"]+"/.test(match[0])) failures.push("assets/js/site.js: tracked phone link is missing its location");
 }
 
 if (failures.length) {

@@ -107,6 +107,13 @@ try {
     throw new Error(`Desktop WhatsApp analytics event is incorrect: ${JSON.stringify(desktopWhatsappEvent)}`);
   }
 
+  const sharedPhoneLocations = await page.locator('[data-track="phone_click"]').evaluateAll((links) =>
+    links.map((link) => link.dataset.phoneLocation)
+  );
+  for (const location of ["desktop_utility", "footer_number", "footer_call_link", "mobile_sticky"]) {
+    if (!sharedPhoneLocations.includes(location)) throw new Error(`Shared phone tracking is missing ${location}.`);
+  }
+
   await page.goto(`${base}/services.html`, { waitUntil: "networkidle" });
   const allCount = await page.locator(".service-row:not([hidden])").count();
   await page.getByRole("button", { name: "Nail care" }).click();
@@ -226,6 +233,12 @@ try {
   await mobilePage.goto(`${base}/contact.html`, { waitUntil: "networkidle" });
   const phoneLink = mobilePage.locator('.contact-direct a[href="tel:+971562285900"]');
   if (!(await phoneLink.isVisible())) throw new Error("Contact phone number is not visible on mobile.");
+  const contactPhoneLocations = await mobilePage.locator('[data-track="phone_click"]').evaluateAll((links) =>
+    links.map((link) => link.dataset.phoneLocation)
+  );
+  for (const location of ["contact_details", "contact_support", "mobile_sticky", "footer_number", "footer_call_link"]) {
+    if (!contactPhoneLocations.includes(location)) throw new Error(`Contact phone tracking is missing ${location}.`);
+  }
   if (
     (await mobilePage.locator('[data-track="whatsapp_click"][data-whatsapp-location="contact_support"]').count()) !== 1
   ) {

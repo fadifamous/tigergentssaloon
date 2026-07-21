@@ -12,6 +12,7 @@ The website pushes privacy-safe events to `window.dataLayer`. Tags configured in
   - `booking_click_device`
 - `maps_click`
 - `phone_click`
+  - `phone_click_location`
 - `whatsapp_click`
   - `whatsapp_click_location`
 - `google_reviews_click`

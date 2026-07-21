@@ -38,7 +38,7 @@ function renderHeader() {
   mount.innerHTML = `
     <div class="utility">
       <div class="container utility-inner">
-        <span>Lake Central Tower · Business Bay, Dubai · <a class="utility-contact" href="${BUSINESS.phoneUrl}" data-track="phone_click">${BUSINESS.phoneDisplay}</a></span>
+        <span>Lake Central Tower · Business Bay, Dubai · <a class="utility-contact" href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="desktop_utility">${BUSINESS.phoneDisplay}</a></span>
         <span class="utility-rating">${BUSINESS.rating} on Google · Open daily ${BUSINESS.hours}</span>
       </div>
     </div>
@@ -79,7 +79,7 @@ function renderFooter() {
               <li><a href="contact.html">Lake Central Tower</a></li>
               <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Marasi Drive, Business Bay</a></li>
               <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Get directions ↗</a></li>
-              <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click">${BUSINESS.phoneDisplay}</a></li>
+              <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="footer_number">${BUSINESS.phoneDisplay}</a></li>
               <li><span>Daily · ${BUSINESS.hours}</span></li>
             </ul>
           </div>
@@ -99,7 +99,7 @@ function renderFooter() {
             <ul class="footer-links">
               <li><a class="js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="footer">Book online ↗</a></li>
               <li><a href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="footer">WhatsApp us ↗</a></li>
-              <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click">Call us</a></li>
+              <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="footer_call_link">Call us</a></li>
               <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="google_reviews_click">Reviews on Google ↗</a></li>
               <li><a href="privacy.html">Privacy</a></li>
               <li><a href="cookies.html">Cookies</a></li>
