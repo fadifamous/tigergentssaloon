@@ -122,10 +122,14 @@ function renderMobileActions() {
   mount.className = "mobile-actions";
   mount.setAttribute("aria-label", "Quick actions");
   mount.innerHTML = `
-    ${bookingLink("Book appointment", "mobile_sticky")}
+    ${bookingLink("Book", "mobile_sticky")}
     <a class="button button-whatsapp" href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="mobile_sticky" aria-label="Chat with Tiger Gents Salon on WhatsApp">
       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a9.84 9.84 0 0 0-8.46 14.86L2 22l5.28-1.5A9.9 9.9 0 1 0 12 2Zm0 17.8a7.8 7.8 0 0 1-3.98-1.08l-.28-.17-3.13.89.91-3.04-.18-.3A7.78 7.78 0 1 1 12 19.8Zm4.27-5.83c-.23-.12-1.38-.68-1.6-.76-.21-.08-.37-.12-.52.12-.16.23-.6.76-.74.91-.14.16-.27.18-.5.06-1.38-.69-2.29-1.23-3.2-2.8-.24-.41.24-.38.69-1.27.08-.16.04-.29-.02-.41-.06-.12-.52-1.26-.72-1.72-.19-.46-.38-.39-.52-.4h-.45c-.16 0-.41.06-.63.29-.21.23-.82.8-.82 1.96s.84 2.28.96 2.44c.12.15 1.66 2.53 4.02 3.55 1.49.64 2.08.7 2.83.59.46-.07 1.38-.57 1.58-1.11.19-.55.19-1.02.13-1.12-.05-.1-.21-.16-.45-.28Z"/></svg>
       <span>WhatsApp</span>
+    </a>
+    <a class="button button-call" href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="mobile_sticky" aria-label="Call Tiger Gents Salon at ${BUSINESS.phoneDisplay}">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z"/></svg>
+      <span>Call</span>
     </a>`;
 }
 
@@ -194,6 +198,9 @@ function initTracking() {
       const details = { page };
       if (tracked.dataset.track === "whatsapp_click") {
         details.whatsapp_click_location = tracked.dataset.whatsappLocation || "unknown";
+      }
+      if (tracked.dataset.track === "phone_click") {
+        details.phone_click_location = tracked.dataset.phoneLocation || "unknown";
       }
       track(tracked.dataset.track, details);
     }

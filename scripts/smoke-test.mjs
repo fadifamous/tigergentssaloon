@@ -176,14 +176,48 @@ try {
   if ((await mobilePage.locator(".menu-toggle").getAttribute("aria-expanded")) !== "false") throw new Error("Mobile menu failed to close.");
   const bookingHref = await mobilePage.locator(".mobile-actions .js-booking").getAttribute("href");
   const mobileWhatsapp = mobilePage.locator('.mobile-actions [data-track="whatsapp_click"]');
+  const mobileCall = mobilePage.locator('.mobile-actions [data-track="phone_click"]');
   const whatsappHref = await mobileWhatsapp.getAttribute("href");
   if (bookingHref !== "https://tigergentssaloon.setmore.com") throw new Error("Mobile booking action does not use Setmore.");
   if (whatsappHref !== "https://wa.me/971562285900") throw new Error("Mobile WhatsApp action is incorrect.");
   if ((await mobileWhatsapp.getAttribute("data-whatsapp-location")) !== "mobile_sticky") {
     throw new Error("Mobile WhatsApp action is missing its analytics location.");
   }
-  const overflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
-  if (overflow) throw new Error("Homepage has horizontal overflow at 390px.");
+  if (!(await mobileCall.isVisible())) throw new Error("Mobile call action is not visible.");
+  if ((await mobileCall.getAttribute("href")) !== "tel:+971562285900") {
+    throw new Error("Mobile call action is incorrect.");
+  }
+  if ((await mobileCall.getAttribute("data-phone-location")) !== "mobile_sticky") {
+    throw new Error("Mobile call action is missing its analytics location.");
+  }
+  await mobilePage.evaluate(() => {
+    window.dataLayer = [];
+  });
+  await mobileCall.evaluate((link) => link.addEventListener("click", (event) => event.preventDefault(), { once: true }));
+  await mobileCall.click();
+  const mobileCallEvent = await mobilePage.evaluate(() =>
+    window.dataLayer.find((item) => item.event === "phone_click")
+  );
+  if (
+    !mobileCallEvent ||
+    mobileCallEvent.phone_click_location !== "mobile_sticky" ||
+    mobileCallEvent.page !== "index.html"
+  ) {
+    throw new Error(`Mobile call analytics event is incorrect: ${JSON.stringify(mobileCallEvent)}`);
+  }
+  for (const width of [390, 320]) {
+    await mobilePage.setViewportSize({ width, height: 844 });
+    await mobilePage.goto(base, { waitUntil: "networkidle" });
+    const quickActions = mobilePage.locator(".mobile-actions .button");
+    if ((await quickActions.count()) !== 3) throw new Error(`Mobile action bar is incomplete at ${width}px.`);
+    for (let index = 0; index < 3; index += 1) {
+      if (!(await quickActions.nth(index).isVisible())) throw new Error(`Mobile action ${index + 1} is hidden at ${width}px.`);
+    }
+    const overflow = await mobilePage.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+    if (overflow) throw new Error(`Homepage has horizontal overflow at ${width}px.`);
+  }
+  await mobilePage.setViewportSize({ width: 390, height: 844 });
+  await mobilePage.goto(base, { waitUntil: "networkidle" });
   await primeScrollReveals(mobilePage);
   await mobilePage.screenshot({ path: "test-artifacts/home-mobile.png", fullPage: true });
   await mobilePage.goto(`${base}/team.html`, { waitUntil: "networkidle" });
