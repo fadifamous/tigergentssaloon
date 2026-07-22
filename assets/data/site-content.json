@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-22T17:30:09.635Z",
+  "updatedAt": "2026-07-22T17:40:54.188Z",
   "updatedBy": "admin",
   "content": {
     "employees": [
@@ -9,7 +9,7 @@
         "slug": "abed",
         "sortOrder": 0,
         "data": {
-          "name": "ABED-",
+          "name": "Abed",
           "role": "Barber",
           "initial": "A",
           "bio": "Available to select within our live booking flow.",
