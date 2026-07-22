@@ -1,5 +1,6 @@
 const BOOKING_URL = "https://tigergentssaloon.setmore.com";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const CONTENT_RETRY_DELAYS = [700, 1500];
 
 const state = {
   user: null,
@@ -66,6 +67,10 @@ async function api(path, options = {}) {
     throw error;
   }
   return data;
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 async function boot() {
@@ -151,7 +156,18 @@ async function refreshFromGitHub() {
   dom.connectionStatus.classList.remove("ready");
   dom.sourceLabel.textContent = "Connecting to GitHub…";
   try {
-    const result = await api("/content");
+    let result;
+    for (let attempt = 0; attempt <= CONTENT_RETRY_DELAYS.length; attempt += 1) {
+      try {
+        result = await api("/content");
+        break;
+      } catch (error) {
+        const canRetry = (error.status === 502 || error.status === 503) && attempt < CONTENT_RETRY_DELAYS.length;
+        if (!canRetry) throw error;
+        dom.sourceLabel.textContent = "Finishing GitHub connection…";
+        await wait(CONTENT_RETRY_DELAYS[attempt]);
+      }
+    }
     state.content.employees = Array.isArray(result.content?.employees) ? result.content.employees : [];
     state.content.gallery = Array.isArray(result.content?.gallery) ? result.content.gallery : [];
     state.headSha = result.headSha || "";
@@ -164,8 +180,13 @@ async function refreshFromGitHub() {
     updateRepositoryLinks();
     renderSection();
   } catch (error) {
-    dom.content.innerHTML = emptyState("GitHub is not connected", error.message, true);
-    dom.sourceLabel.textContent = "GitHub setup needed";
+    const temporary = error.status === 502 || error.status === 503;
+    dom.content.innerHTML = emptyState(
+      temporary ? "GitHub is still connecting" : "GitHub is not connected",
+      temporary ? "Cloudflare is finishing the latest deployment. Use Refresh in a few seconds if this message remains." : error.message,
+      true
+    );
+    dom.sourceLabel.textContent = temporary ? "Connection still starting" : "GitHub setup needed";
   } finally {
     setLoading(false);
   }

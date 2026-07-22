@@ -63,6 +63,7 @@ try {
     let authenticated = false;
     let content = { employees: [structuredClone(employee)], gallery: [structuredClone(picture)] };
     let headSha = "abc123";
+    let contentAttempts = 0;
 
     await page.route(`${base}/api/admin/**`, async (route) => {
       const request = route.request();
@@ -85,6 +86,14 @@ try {
         return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
       }
       if (path.endsWith("/content")) {
+        contentAttempts += 1;
+        if (contentAttempts === 1) {
+          return route.fulfill({
+            status: 503,
+            contentType: "application/json",
+            body: JSON.stringify({ error: "The GitHub token has not been configured in Cloudflare yet." })
+          });
+        }
         return route.fulfill({
           status: 200,
           contentType: "application/json",
@@ -109,6 +118,8 @@ try {
     await page.locator('[data-auth-view="login"] input[name="password"]').fill("local-test-password");
     await page.locator('[data-login-form] button[type="submit"]').click();
     await page.locator("[data-admin-app]").waitFor({ state: "visible" });
+    await page.locator("[data-source-label]", { hasText: "fadifamous/tigergentssaloon · main" }).waitFor({ state: "attached" });
+    if (contentAttempts < 2) throw new Error(`Admin did not retry a temporary GitHub connection failure at ${viewport.width}px.`);
 
     if (viewport.width < 900) await page.locator("[data-sidebar-toggle]").click();
     await page.locator('[data-section="employees"]').click();
