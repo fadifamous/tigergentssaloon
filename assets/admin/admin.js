@@ -106,9 +106,9 @@ function bindEvents() {
 
 async function submitLogin(event) {
   event.preventDefault();
+  const form = new FormData(dom.loginForm);
   setFormBusy(dom.loginForm, true);
   hideError(dom.loginError);
-  const form = new FormData(dom.loginForm);
   try {
     const result = await api("/auth/login", {
       method: "POST",
@@ -343,10 +343,10 @@ function imageField(currentUrl, required) {
 async function saveEditor(event) {
   event.preventDefault();
   if (!state.editing) return;
+  const form = new FormData(dom.editorForm);
   hideError(dom.editorError);
   setFormBusy(dom.editorForm, true);
   const { type, id, item } = state.editing;
-  const form = new FormData(dom.editorForm);
   const targetId = id || `${type === "employees" ? "employee" : "picture"}-${crypto.randomUUID()}`;
   const data = type === "employees"
     ? {

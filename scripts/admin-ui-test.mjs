@@ -73,6 +73,10 @@ try {
           : { status: 401, contentType: "application/json", body: JSON.stringify({ error: "Authentication required." }) });
       }
       if (path.endsWith("/auth/login")) {
+        const body = request.postDataJSON();
+        if (body.username !== "admin" || body.password !== "local-test-password") {
+          return route.fulfill({ status: 401, contentType: "application/json", body: JSON.stringify({ error: "Login form did not submit its field values." }) });
+        }
         authenticated = true;
         return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { username: "admin" }, repository: "fadifamous/tigergentssaloon" }) });
       }
