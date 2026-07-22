@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-22T17:40:54.188Z",
+  "updatedAt": "2026-07-22T17:43:03.114Z",
   "updatedBy": "admin",
   "content": {
     "employees": [
@@ -11,7 +11,7 @@
         "data": {
           "name": "Abed",
           "role": "Barber",
-          "initial": "A",
+          "initial": "B",
           "bio": "Available to select within our live booking flow.",
           "bookingUrl": "https://tigergentssaloon.setmore.com/",
           "imageUrl": "",
