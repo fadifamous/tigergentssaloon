@@ -73,6 +73,9 @@ try {
 const build = readFileSync(join(root, "scripts/build.mjs"), "utf8");
 if (!build.includes('"assets"')) failures.push("scripts/build.mjs: assets and content data are not copied to dist");
 
+const wrangler = readFileSync(join(root, "wrangler.jsonc"), "utf8");
+if (!wrangler.includes('"keep_vars": true')) failures.push("wrangler.jsonc: dashboard runtime secrets will not be preserved across automatic deployments");
+
 if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);

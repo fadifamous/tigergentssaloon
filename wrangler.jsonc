@@ -3,6 +3,7 @@
   "name": "tigergentssalon",
   "compatibility_date": "2026-07-22",
   "main": "./src/worker.js",
+  "keep_vars": true,
   "observability": {
     "enabled": true
   },

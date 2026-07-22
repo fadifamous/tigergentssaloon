@@ -36,6 +36,8 @@ Open **Cloudflare > Workers & Pages > tigergentssalon > Settings > Variables and
 
 Select **Deploy** after adding the secrets. The username is already configured as `admin` in `wrangler.jsonc`.
 
+The repository also sets `keep_vars: true` in `wrangler.jsonc`. This is essential: admin saves create GitHub commits and automatic Cloudflare deployments, and this setting preserves dashboard-managed runtime variables and secrets across those deployments.
+
 The equivalent command-line setup is:
 
 ```powershell
@@ -103,3 +105,5 @@ Open the local URL printed by Wrangler and add `/admin`. A real save will commit
 - Remove admin access by deleting or rotating `GITHUB_TOKEN`.
 - Change the repository/branch through the non-secret values in `wrangler.jsonc`.
 - Do not place the password or token in source code, `wrangler.jsonc`, screenshots, logs or GitHub files.
+
+If the admin reports that a secret is not configured immediately after an automatic build, confirm both values are under the Worker's **Settings > Variables and Secrets** runtime section—not only **Settings > Build**—and confirm `keep_vars` remains enabled in `wrangler.jsonc`.
