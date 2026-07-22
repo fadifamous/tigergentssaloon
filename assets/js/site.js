@@ -30,7 +30,7 @@ async function loadManagedContent() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 2500);
   try {
-    const response = await fetch("/data/site-content.json", {
+    const response = await fetch("/assets/data/site-content.json", {
       cache: "no-cache",
       headers: { Accept: "application/json" },
       signal: controller.signal

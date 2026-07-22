@@ -3,10 +3,10 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const required = [
-  "admin/index.html",
+  "admin.html",
   "assets/admin/admin.css",
   "assets/admin/admin.js",
-  "data/site-content.json",
+  "assets/data/site-content.json",
   "src/worker.js",
   "wrangler.jsonc",
   ".dev.vars.example"
@@ -14,7 +14,7 @@ const required = [
 const failures = [];
 for (const file of required) if (!existsSync(join(root, file))) failures.push(`Missing: ${file}`);
 
-const sensitiveSources = ["admin/index.html", "assets/admin/admin.js", "src/worker.js", "wrangler.jsonc"];
+const sensitiveSources = ["admin.html", "assets/admin/admin.js", "src/worker.js", "wrangler.jsonc"];
 const initialPassword = ["tiger", "salon", "admin"].join("");
 for (const file of sensitiveSources) {
   const source = readFileSync(join(root, file), "utf8");
@@ -43,12 +43,12 @@ for (const forbidden of ["env.DB", "env.MEDIA", "ADMIN_BOOTSTRAP_PASSWORD", "PBK
   if (worker.includes(forbidden)) failures.push(`src/worker.js: obsolete storage/authentication dependency remains: ${forbidden}`);
 }
 
-const adminHtml = readFileSync(join(root, "admin/index.html"), "utf8");
+const adminHtml = readFileSync(join(root, "admin.html"), "utf8");
 for (const section of ["dashboard", "employees", "gallery"]) {
-  if (!adminHtml.includes(`data-section="${section}"`)) failures.push(`admin/index.html: missing ${section} section`);
+  if (!adminHtml.includes(`data-section="${section}"`)) failures.push(`admin.html: missing ${section} section`);
 }
 for (const obsolete of ["services", "media", "homepage", "business", "reviews", "pages", "audit"]) {
-  if (adminHtml.includes(`data-section="${obsolete}"`)) failures.push(`admin/index.html: obsolete ${obsolete} section remains`);
+  if (adminHtml.includes(`data-section="${obsolete}"`)) failures.push(`admin.html: obsolete ${obsolete} section remains`);
 }
 
 const adminJs = readFileSync(join(root, "assets/admin/admin.js"), "utf8");
@@ -57,21 +57,21 @@ for (const feature of ["/auth/login", "/content", "/publish", "prepareUpload", "
 }
 
 const site = readFileSync(join(root, "assets/js/site.js"), "utf8");
-for (const feature of ["/data/site-content.json", "hydrateEmployees", "hydrateGallery"]) {
+for (const feature of ["/assets/data/site-content.json", "hydrateEmployees", "hydrateGallery"]) {
   if (!site.includes(feature)) failures.push(`assets/js/site.js: missing GitHub-content integration ${feature}`);
 }
 if (site.includes("/api/content")) failures.push("assets/js/site.js: obsolete database content endpoint remains");
 
 try {
-  const data = JSON.parse(readFileSync(join(root, "data/site-content.json"), "utf8"));
-  if (!Array.isArray(data.content?.employees) || !data.content.employees.length) failures.push("data/site-content.json: employees are missing");
-  if (!Array.isArray(data.content?.gallery) || !data.content.gallery.length) failures.push("data/site-content.json: gallery is missing");
+  const data = JSON.parse(readFileSync(join(root, "assets/data/site-content.json"), "utf8"));
+  if (!Array.isArray(data.content?.employees) || !data.content.employees.length) failures.push("assets/data/site-content.json: employees are missing");
+  if (!Array.isArray(data.content?.gallery) || !data.content.gallery.length) failures.push("assets/data/site-content.json: gallery is missing");
 } catch {
-  failures.push("data/site-content.json: invalid JSON");
+  failures.push("assets/data/site-content.json: invalid JSON");
 }
 
 const build = readFileSync(join(root, "scripts/build.mjs"), "utf8");
-if (!build.includes('"data"')) failures.push("scripts/build.mjs: content data is not copied to dist");
+if (!build.includes('"assets"')) failures.push("scripts/build.mjs: assets and content data are not copied to dist");
 
 if (failures.length) {
   console.error(failures.join("\n"));

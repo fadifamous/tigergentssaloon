@@ -13,7 +13,7 @@ const server = spawn(process.execPath, ["server.mjs"], {
 async function waitForServer() {
   for (let attempt = 0; attempt < 40; attempt += 1) {
     try {
-      const response = await fetch(`${base}/admin/`);
+      const response = await fetch(`${base}/admin.html`);
       if (response.ok) return;
     } catch {}
     await new Promise((resolve) => setTimeout(resolve, 250));
@@ -100,7 +100,7 @@ try {
       return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "Not found" }) });
     });
 
-    await page.goto(`${base}/admin/`, { waitUntil: "networkidle" });
+    await page.goto(`${base}/admin.html`, { waitUntil: "networkidle" });
     await page.screenshot({ path: `test-artifacts/admin-login-${viewport.width}.png`, fullPage: false });
     await page.locator('[data-auth-view="login"] input[name="password"]').fill("local-test-password");
     await page.locator('[data-login-form] button[type="submit"]').click();

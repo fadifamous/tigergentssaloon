@@ -10,7 +10,7 @@ if (basename(dist).toLowerCase() !== "dist" || !dist.startsWith(resolve(root))) 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 
-for (const directory of ["assets", "admin", "data"]) {
+for (const directory of ["assets"]) {
   await cp(join(root, directory), join(dist, directory), { recursive: true });
 }
 

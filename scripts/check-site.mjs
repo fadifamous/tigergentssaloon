@@ -14,7 +14,7 @@ const failures = [];
 const retiredPlatformPattern = /\x66\x72\x65\x73\x68\x61/i;
 for (const file of required) if (!existsSync(join(root, file))) failures.push(`Missing: ${file}`);
 
-const htmlFiles = readdirSync(root).filter((file) => extname(file) === ".html");
+const htmlFiles = readdirSync(root).filter((file) => extname(file) === ".html" && file !== "admin.html");
 for (const file of htmlFiles) {
   const html = readFileSync(join(root, file), "utf8");
   if (retiredPlatformPattern.test(html)) failures.push(`${file}: contains a retired booking-platform reference`);

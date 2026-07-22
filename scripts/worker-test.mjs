@@ -34,7 +34,7 @@ globalThis.fetch = async (input, init = {}) => {
 
   if (path === "/git/ref/heads/main") return githubJson({ object: { sha: headSha } });
   if (path === `/git/commits/${headSha}`) return githubJson({ sha: headSha, tree: { sha: "tree-1" }, html_url: `https://github.com/example/commit/${headSha}` });
-  if (path === "/contents/data/site-content.json") {
+  if (path === "/contents/assets/data/site-content.json") {
     return githubJson({ encoding: "base64", content: Buffer.from(JSON.stringify(latestDocument), "utf8").toString("base64") });
   }
   if (path === "/git/blobs" && init.method === "POST") {

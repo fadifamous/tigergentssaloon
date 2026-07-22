@@ -1,5 +1,5 @@
 const SESSION_COOKIE = "tiger_admin_session";
-const CONTENT_PATH = "data/site-content.json";
+const CONTENT_PATH = "assets/data/site-content.json";
 const MAX_JSON_BYTES = 7 * 1024 * 1024;
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const API_VERSION = "2026-03-10";
@@ -376,7 +376,7 @@ class GitHubError extends Error {
 async function serveAdminShell(request, env) {
   if (!env.ASSETS) return new Response("Admin assets are unavailable.", { status: 503 });
   const assetUrl = new URL(request.url);
-  assetUrl.pathname = "/admin/index.html";
+  assetUrl.pathname = "/admin.html";
   assetUrl.search = "";
   const response = await env.ASSETS.fetch(new Request(assetUrl, { method: "GET", headers: request.headers }));
   const headers = new Headers(response.headers);

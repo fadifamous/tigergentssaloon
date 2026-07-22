@@ -7,10 +7,10 @@ The admin is available at `https://tigergentssaloon.com/admin` and is intentiona
 
 There is no D1 database and no R2 bucket. GitHub is the single source of truth:
 
-1. The admin reads `data/site-content.json` from GitHub.
+1. The admin reads `assets/data/site-content.json` from GitHub.
 2. Clicking **Save to website** creates one commit containing the content change and, when supplied, the new image.
 3. The existing Cloudflare GitHub integration sees the new commit and deploys it.
-4. The public site reads the deployed `data/site-content.json` file.
+4. The public site reads the deployed `assets/data/site-content.json` file.
 
 This stays within the normal Cloudflare Workers Free architecture and avoids maintaining a separate content database.
 

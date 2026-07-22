@@ -43,7 +43,7 @@ try {
   await page.route("https://www.googletagmanager.com/**", (route) =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: "" })
   );
-  await page.route(`${base}/data/site-content.json`, (route) =>
+  await page.route(`${base}/assets/data/site-content.json`, (route) =>
     route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ content: {} }) })
   );
   const consoleErrors = [];
@@ -159,14 +159,14 @@ try {
   await primeScrollReveals(page);
   await page.screenshot({ path: "test-artifacts/services-desktop.png", fullPage: true });
 
-  await page.unroute(`${base}/data/site-content.json`);
+  await page.unroute(`${base}/assets/data/site-content.json`);
   const managedPayload = {
     content: {
       employees: [{ slug: "managed-barber", data: { name: "Managed Barber", role: "Barber", status: "active", featured: true, bookingUrl: "https://example.com/managed-booking" } }],
       gallery: [{ slug: "managed-picture", data: { title: "Managed picture", imageUrl: "/assets/images/salon-wide-opt.webp", altText: "Managed salon picture", status: "active", featured: true, layout: "wide" } }]
     }
   };
-  await page.route(`${base}/data/site-content.json`, (route) =>
+  await page.route(`${base}/assets/data/site-content.json`, (route) =>
     route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(managedPayload) })
   );
   await page.goto(base, { waitUntil: "networkidle" });
@@ -186,7 +186,7 @@ try {
   await mobilePage.route("https://www.googletagmanager.com/**", (route) =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: "" })
   );
-  await mobilePage.route(`${base}/data/site-content.json`, (route) =>
+  await mobilePage.route(`${base}/assets/data/site-content.json`, (route) =>
     route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ content: {} }) })
   );
   await mobilePage.addInitScript(() => localStorage.setItem("tiger-cookie-choice", "essential"));

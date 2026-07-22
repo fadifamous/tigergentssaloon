@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "updatedAt": null,
+  "updatedBy": "initial website",
+  "content": {
+    "employees": [
+      {"id":"employee-abed","slug":"abed","sortOrder":0,"data":{"name":"ABED","role":"Barber","initial":"A","bio":"Available to select within our live booking flow.","bookingUrl":"https://tigergentssaloon.setmore.com/","imageUrl":"","featured":true,"status":"active"}},
+      {"id":"employee-shahem","slug":"shahem","sortOrder":1,"data":{"name":"Shahem","role":"Barber","initial":"S","bio":"Available to select within our live booking flow.","bookingUrl":"https://tigergentssaloon.setmore.com/","imageUrl":"","featured":true,"status":"active"}},
+      {"id":"employee-joe","slug":"joe","sortOrder":2,"data":{"name":"Joe","role":"Barber","initial":"J","bio":"Available to select within our live booking flow.","bookingUrl":"https://tigergentssaloon.setmore.com/","imageUrl":"","featured":true,"status":"active"}},
+      {"id":"employee-tiya","slug":"tiya","sortOrder":3,"data":{"name":"Tiya","role":"Nail Technician","initial":"T","bio":"Available to select within our live booking flow.","bookingUrl":"https://tigergentssaloon.setmore.com/","imageUrl":"","featured":true,"status":"active"}}
+    ],
+    "gallery": [
+      {"id":"picture-salon-wide","slug":"salon-wide","sortOrder":0,"data":{"title":"Salon interior","imageUrl":"/assets/images/salon-wide-opt.webp","altText":"Wide view of Tiger Gents Salon interior","caption":"","layout":"wide tall","featured":true,"status":"active"}},
+      {"id":"picture-barber-chairs","slug":"barber-chairs","sortOrder":1,"data":{"title":"Barber chairs","imageUrl":"/assets/images/barber-chairs-opt.webp","altText":"Tan barber chairs and mirrors","caption":"","layout":"","featured":true,"status":"active"}},
+      {"id":"picture-barber-stations","slug":"barber-stations","sortOrder":2,"data":{"title":"Barber stations","imageUrl":"/assets/images/barber-stations-opt.webp","altText":"Five prepared barber stations","caption":"","layout":"","featured":true,"status":"active"}},
+      {"id":"picture-treatment-room","slug":"treatment-room","sortOrder":3,"data":{"title":"Treatment room","imageUrl":"/assets/images/treatment-room-opt.webp","altText":"Private treatment room","caption":"","layout":"tall","featured":false,"status":"active"}},
+      {"id":"picture-nailcare-chairs","slug":"nailcare-chairs","sortOrder":4,"data":{"title":"Nail care chairs","imageUrl":"/assets/images/nailcare-chairs-opt.webp","altText":"Nail and foot care chairs","caption":"","layout":"wide","featured":false,"status":"active"}},
+      {"id":"picture-salon-depth","slug":"salon-depth","sortOrder":5,"data":{"title":"Salon seating","imageUrl":"/assets/images/salon-depth-opt.webp","altText":"Salon interior with barber and treatment seating","caption":"","layout":"wide","featured":false,"status":"active"}},
+      {"id":"picture-barber-close","slug":"barber-close","sortOrder":6,"data":{"title":"Prepared barber chairs","imageUrl":"/assets/images/barber-chairs-close-opt.webp","altText":"Close view of prepared barber chairs","caption":"","layout":"","featured":false,"status":"active"}},
+      {"id":"picture-nailcare-station","slug":"nailcare-station","sortOrder":7,"data":{"title":"Nail care area","imageUrl":"/assets/images/nailcare-station-opt.webp","altText":"Nail care seating area","caption":"","layout":"","featured":false,"status":"active"}},
+      {"id":"picture-salon-entrance","slug":"salon-entrance","sortOrder":8,"data":{"title":"Salon entrance","imageUrl":"/assets/images/salon-entrance-opt.webp","altText":"Tiger Gents Salon storefront at Lake Central Tower","caption":"","layout":"wide","featured":false,"status":"active"}}
+    ]
+  }
+}

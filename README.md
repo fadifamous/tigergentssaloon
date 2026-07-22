@@ -128,8 +128,8 @@ assets/
   images/      Supplied salon photography
   js/          Shared behavior and structured service data
 docs/          Requirements and handover reports
-admin/         Administration dashboard shell
-data/          GitHub-backed team and gallery content
+admin.html     Administration dashboard shell
+assets/data/   GitHub-backed team and gallery content
 src/           Cloudflare Worker, login and GitHub update API
 scripts/       Build, integrity and browser checks
 *.html         Public pages
