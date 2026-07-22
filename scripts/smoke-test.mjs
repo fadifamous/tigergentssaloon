@@ -43,6 +43,9 @@ try {
   await page.route("https://www.googletagmanager.com/**", (route) =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: "" })
   );
+  await page.route(`${base}/data/site-content.json`, (route) =>
+    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ content: {} }) })
+  );
   const consoleErrors = [];
   page.on("console", (message) => {
     if (
@@ -155,6 +158,22 @@ try {
   await page.goto(`${base}/services.html`, { waitUntil: "networkidle" });
   await primeScrollReveals(page);
   await page.screenshot({ path: "test-artifacts/services-desktop.png", fullPage: true });
+
+  await page.unroute(`${base}/data/site-content.json`);
+  const managedPayload = {
+    content: {
+      employees: [{ slug: "managed-barber", data: { name: "Managed Barber", role: "Barber", status: "active", featured: true, bookingUrl: "https://example.com/managed-booking" } }],
+      gallery: [{ slug: "managed-picture", data: { title: "Managed picture", imageUrl: "/assets/images/salon-wide-opt.webp", altText: "Managed salon picture", status: "active", featured: true, layout: "wide" } }]
+    }
+  };
+  await page.route(`${base}/data/site-content.json`, (route) =>
+    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(managedPayload) })
+  );
+  await page.goto(base, { waitUntil: "networkidle" });
+  for (const text of ["Managed Barber"]) {
+    if (!(await page.getByText(text, { exact: false }).count())) throw new Error(`Managed content did not hydrate: ${text}`);
+  }
+  if (!(await page.locator('img[alt="Managed salon picture"]').count())) throw new Error("Managed gallery did not hydrate.");
   await desktop.close();
 
   const mobile = await browser.newContext({
@@ -166,6 +185,9 @@ try {
   const mobilePage = await mobile.newPage();
   await mobilePage.route("https://www.googletagmanager.com/**", (route) =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: "" })
+  );
+  await mobilePage.route(`${base}/data/site-content.json`, (route) =>
+    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ content: {} }) })
   );
   await mobilePage.addInitScript(() => localStorage.setItem("tiger-cookie-choice", "essential"));
   await mobilePage.goto(base, { waitUntil: "networkidle" });

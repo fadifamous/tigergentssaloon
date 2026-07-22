@@ -6,7 +6,10 @@ const BUSINESS = Object.freeze({
   phoneUrl: "tel:+971562285900",
   whatsappUrl: "https://wa.me/971562285900",
   rating: "5 stars",
-  hours: "10:00 AM–12:00 AM"
+  hours: "10:00 AM–12:00 AM",
+  reviewCount: "100+",
+  addressLine1: "Lake Central Tower",
+  addressLine2: "Marasi Drive, Business Bay"
 });
 
 const navItems = [
@@ -20,6 +23,31 @@ const navItems = [
 
 const page = location.pathname.split("/").pop() || "index.html";
 const relative = "";
+
+let MANAGED_CONTENT = {};
+
+async function loadManagedContent() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 2500);
+  try {
+    const response = await fetch("/data/site-content.json", {
+      cache: "no-cache",
+      headers: { Accept: "application/json" },
+      signal: controller.signal
+    });
+    if (!response.ok) return;
+    const payload = await response.json();
+    MANAGED_CONTENT = payload.content || {};
+  } catch {
+    MANAGED_CONTENT = {};
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function managedItems(type) {
+  return Array.isArray(MANAGED_CONTENT[type]) ? MANAGED_CONTENT[type] : [];
+}
 
 function bookingLink(label = "Book appointment", locationName = "unknown", className = "button") {
   return `<a class="${className} js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="${locationName}">${label}<span aria-hidden="true">↗</span></a>`;
@@ -38,7 +66,7 @@ function renderHeader() {
   mount.innerHTML = `
     <div class="utility">
       <div class="container utility-inner">
-        <span>Lake Central Tower · Business Bay, Dubai · <a class="utility-contact" href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="desktop_utility">${BUSINESS.phoneDisplay}</a></span>
+        <span>${BUSINESS.addressLine1} · ${BUSINESS.addressLine2} · <a class="utility-contact" href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="desktop_utility">${BUSINESS.phoneDisplay}</a></span>
         <span class="utility-rating">${BUSINESS.rating} on Google · Open daily ${BUSINESS.hours}</span>
       </div>
     </div>
@@ -76,8 +104,8 @@ function renderFooter() {
           <div>
             <p class="footer-heading">Visit</p>
             <ul class="footer-links">
-              <li><a href="contact.html">Lake Central Tower</a></li>
-              <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Marasi Drive, Business Bay</a></li>
+              <li><a href="contact.html">${BUSINESS.addressLine1}</a></li>
+              <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">${BUSINESS.addressLine2}</a></li>
               <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="maps_click">Get directions ↗</a></li>
               <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="footer_number">${BUSINESS.phoneDisplay}</a></li>
               <li><span>Daily · ${BUSINESS.hours}</span></li>
@@ -109,8 +137,8 @@ function renderFooter() {
           </div>
         </div>
         <div class="footer-bottom">
-          <span>© <span data-year></span> Tiger Gents Salon. All rights reserved.</span>
-          <span>5.0 rating from 100+ customer reviews on Google.</span>
+          <span>© <span data-year></span> ${BUSINESS.name}. All rights reserved.</span>
+          <span>${BUSINESS.rating.replace(" stars", "")} rating from ${BUSINESS.reviewCount} customer reviews on Google.</span>
         </div>
       </div>
     </footer>`;
@@ -131,6 +159,62 @@ function renderMobileActions() {
       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z"/></svg>
       <span>Call</span>
     </a>`;
+}
+
+function hydrateManagedContent() {
+  hydrateEmployees();
+  hydrateGallery();
+}
+
+function hydrateEmployees() {
+  const employees = managedItems("employees")
+    .map((item) => ({ ...item.data, slug: item.slug }))
+    .filter((employee) => employee.status === "active");
+  if (!employees.length) return;
+  document.querySelectorAll("[data-managed-team]").forEach((grid) => {
+    const homepage = grid.hasAttribute("data-home-team");
+    const selected = (homepage ? employees.filter((employee) => employee.featured) : employees).slice(0, homepage ? 4 : employees.length);
+    if (!selected.length) return;
+    grid.innerHTML = selected.map((employee) => {
+      const image = employee.imageUrl ? `<img class="team-photo" src="${escapePublic(managedUrl(employee.imageUrl, ""))}" alt="${escapePublic(employee.name)}, ${escapePublic(employee.role)}" loading="lazy">` : "";
+      return `<article class="team-card ${image ? "has-image" : ""} reveal">
+        ${image}<span class="team-initial" aria-hidden="true">${escapePublic(employee.initial || employee.name.slice(0, 1))}</span>
+        <div><h3>${escapePublic(employee.name)}</h3><p class="team-role">${escapePublic(employee.role)}</p>${homepage ? "" : `<p class="copy-muted">${escapePublic(employee.bio || "Available to select within our live booking flow.")}</p>`}<a class="text-link js-booking" href="${escapePublic(managedUrl(employee.bookingUrl, BUSINESS.bookingUrl))}" target="_blank" rel="noopener noreferrer" data-booking-location="team_${escapePublic(slugForTracking(employee.slug || employee.name))}">Book with ${escapePublic(employee.name)}</a></div>
+      </article>`;
+    }).join("");
+  });
+}
+
+function hydrateGallery() {
+  const pictures = managedItems("gallery")
+    .map((item) => ({ ...item.data, slug: item.slug }))
+    .filter((picture) => picture.status === "active" && picture.imageUrl);
+  if (!pictures.length) return;
+  document.querySelectorAll("[data-managed-gallery]").forEach((grid) => {
+    const homepage = grid.hasAttribute("data-home-gallery");
+    const selected = (homepage ? pictures.filter((picture) => picture.featured) : pictures).slice(0, homepage ? 3 : pictures.length);
+    if (!selected.length) return;
+    grid.innerHTML = selected.map((picture) => `<button class="gallery-item ${escapePublic(picture.layout || "")}" type="button"><img src="${escapePublic(managedUrl(picture.imageUrl, ""))}" alt="${escapePublic(picture.altText)}" width="1200" height="800" loading="lazy"></button>`).join("");
+  });
+}
+
+function managedUrl(value, fallback) {
+  const text = String(value || "").trim();
+  if (text.startsWith("/assets/")) return text;
+  try {
+    const url = new URL(text);
+    return url.protocol === "https:" ? url.href : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function escapePublic(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+}
+
+function slugForTracking(value) {
+  return String(value || "item").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
 }
 
 function renderCookieBanner() {
@@ -277,15 +361,21 @@ function initCookieBanner() {
   });
 }
 
-renderHeader();
-renderFooter();
-renderMobileActions();
-renderCookieBanner();
-document.querySelectorAll("[data-year]").forEach((node) => (node.textContent = new Date().getFullYear()));
-initNavigation();
-initHeader();
-initTracking();
-initReveals();
-initFilters();
-initGallery();
-initCookieBanner();
+async function bootstrapSite() {
+  await loadManagedContent();
+  renderHeader();
+  renderFooter();
+  renderMobileActions();
+  hydrateManagedContent();
+  renderCookieBanner();
+  document.querySelectorAll("[data-year]").forEach((node) => (node.textContent = new Date().getFullYear()));
+  initNavigation();
+  initHeader();
+  initTracking();
+  initReveals();
+  initFilters();
+  initGallery();
+  initCookieBanner();
+}
+
+bootstrapSite();

@@ -1,4 +1,7 @@
 node_modules/
+dist/
+.dev.vars
+.wrangler/
 test-artifacts/
 tmp-*.png
 server.*.log

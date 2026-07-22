@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tigergentssalon",
+  "compatibility_date": "2026-07-22",
+  "main": "./src/worker.js",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/admin",
+      "/admin/*",
+      "/api/admin/*"
+    ]
+  },
+  "vars": {
+    "ADMIN_USERNAME": "admin",
+    "ADMIN_SESSION_HOURS": "12",
+    "GITHUB_OWNER": "fadifamous",
+    "GITHUB_REPO": "tigergentssaloon",
+    "GITHUB_BRANCH": "main"
+  }
+}

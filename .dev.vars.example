@@ -1,0 +1,4 @@
+# Copy this file to .dev.vars for local admin testing only.
+# Never commit .dev.vars or place these values in wrangler.jsonc.
+ADMIN_PASSWORD=replace-with-local-password
+GITHUB_TOKEN=github-fine-grained-token-with-contents-write-access

@@ -2,11 +2,18 @@
   "name": "tiger-gents-salon",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Premium multi-page website for Tiger Gents Salon, Business Bay, Dubai.",
   "scripts": {
     "start": "node server.mjs",
+    "dev:admin": "npm run build && npx wrangler dev",
+    "build": "node scripts/build.mjs",
     "check": "node scripts/check-site.mjs",
-    "test:smoke": "node scripts/smoke-test.mjs"
+    "check:admin": "node scripts/check-admin.mjs",
+    "test:worker": "node scripts/worker-test.mjs",
+    "test:smoke": "node scripts/smoke-test.mjs",
+    "test:admin": "node scripts/admin-ui-test.mjs",
+    "test": "npm run check && npm run check:admin && npm run test:worker && npm run test:smoke && npm run test:admin"
   },
   "engines": {
     "node": ">=18"
