@@ -164,6 +164,7 @@ function renderMobileActions() {
 function hydrateManagedContent() {
   hydrateEmployees();
   hydrateGallery();
+  hydrateManagedPictures();
 }
 
 function hydrateEmployees() {
@@ -195,6 +196,22 @@ function hydrateGallery() {
     const selected = (homepage ? pictures.filter((picture) => picture.featured) : pictures).slice(0, homepage ? 3 : pictures.length);
     if (!selected.length) return;
     grid.innerHTML = selected.map((picture) => `<button class="gallery-item ${escapePublic(picture.layout || "")}" type="button"><img src="${escapePublic(managedUrl(picture.imageUrl, ""))}" alt="${escapePublic(picture.altText)}" width="1200" height="800" loading="lazy"></button>`).join("");
+  });
+}
+
+function hydrateManagedPictures() {
+  const pictures = new Map(
+    managedItems("gallery")
+      .filter((item) => item.data?.status === "active" && item.data.imageUrl)
+      .map((item) => [item.slug, item.data])
+  );
+  document.querySelectorAll("[data-managed-picture]").forEach((image) => {
+    const picture = pictures.get(image.dataset.managedPicture);
+    if (!picture) return;
+    const source = managedUrl(picture.imageUrl, "");
+    if (!source) return;
+    image.src = source;
+    if (picture.altText) image.alt = picture.altText;
   });
 }
 

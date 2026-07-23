@@ -57,7 +57,7 @@ for (const feature of ["/auth/login", "/content", "/publish", "prepareUpload", "
 }
 
 const site = readFileSync(join(root, "assets/js/site.js"), "utf8");
-for (const feature of ["/assets/data/site-content.json", "hydrateEmployees", "hydrateGallery"]) {
+for (const feature of ["/assets/data/site-content.json", "hydrateEmployees", "hydrateGallery", "hydrateManagedPictures"]) {
   if (!site.includes(feature)) failures.push(`assets/js/site.js: missing GitHub-content integration ${feature}`);
 }
 if (site.includes("/api/content")) failures.push("assets/js/site.js: obsolete database content endpoint remains");

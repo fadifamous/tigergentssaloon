@@ -163,7 +163,10 @@ try {
   const managedPayload = {
     content: {
       employees: [{ slug: "managed-barber", data: { name: "Managed Barber", role: "Barber", status: "active", featured: true, bookingUrl: "https://example.com/managed-booking" } }],
-      gallery: [{ slug: "managed-picture", data: { title: "Managed picture", imageUrl: "/assets/images/salon-wide-opt.webp", altText: "Managed salon picture", status: "active", featured: true, layout: "wide" } }]
+      gallery: [
+        { slug: "managed-picture", data: { title: "Managed picture", imageUrl: "/assets/images/salon-wide-opt.webp", altText: "Managed salon picture", status: "active", featured: true, layout: "wide" } },
+        { slug: "salon-entrance", data: { title: "Salon entrance", imageUrl: "/assets/uploads/gallery/test-salon-entrance.png", altText: "Managed storefront picture", status: "active", featured: false, layout: "wide" } }
+      ]
     }
   };
   await page.route(`${base}/assets/data/site-content.json`, (route) =>
@@ -174,6 +177,13 @@ try {
     if (!(await page.getByText(text, { exact: false }).count())) throw new Error(`Managed content did not hydrate: ${text}`);
   }
   if (!(await page.locator('img[alt="Managed salon picture"]').count())) throw new Error("Managed gallery did not hydrate.");
+  const managedLocationImage = page.locator('[data-managed-picture="salon-entrance"]');
+  if ((await managedLocationImage.getAttribute("src")) !== "/assets/uploads/gallery/test-salon-entrance.png") {
+    throw new Error("Managed Salon entrance picture did not hydrate the homepage location image.");
+  }
+  if ((await managedLocationImage.getAttribute("alt")) !== "Managed storefront picture") {
+    throw new Error("Managed Salon entrance alt text did not hydrate the homepage location image.");
+  }
   await desktop.close();
 
   const mobile = await browser.newContext({
