@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-22T17:43:13.454Z",
+  "updatedAt": "2026-07-23T08:04:45.238Z",
   "updatedBy": "admin",
   "content": {
     "employees": [
@@ -184,7 +184,7 @@
         "sortOrder": 8,
         "data": {
           "title": "Salon entrance",
-          "imageUrl": "/assets/images/salon-entrance-opt.webp",
+          "imageUrl": "/assets/uploads/gallery/1784793885238-salon-entrance-4052939b.png",
           "altText": "Tiger Gents Salon storefront at Lake Central Tower",
           "caption": "",
           "layout": "wide",
