@@ -10,6 +10,8 @@ The website pushes privacy-safe events to `window.dataLayer`. Tags configured in
   - `booking_click_location`
   - `booking_click_page`
   - `booking_click_device`
+  - `booking_provider`
+  - `booking_destination_host`
 - `maps_click`
 - `phone_click`
   - `phone_click_location`

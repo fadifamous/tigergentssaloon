@@ -61,7 +61,15 @@ try {
     const context = await browser.newContext({ viewport });
     const page = await context.newPage();
     let authenticated = false;
-    let content = { employees: [structuredClone(employee)], gallery: [structuredClone(picture)] };
+    let content = {
+      booking: {
+        provider: "setmore",
+        setmoreUrl: "https://tigergentssaloon.setmore.com/",
+        freshaUrl: ""
+      },
+      employees: [structuredClone(employee)],
+      gallery: [structuredClone(picture)]
+    };
     let headSha = "abc123";
     let contentAttempts = 0;
 
@@ -102,7 +110,7 @@ try {
       }
       if (path.endsWith("/publish")) {
         const body = request.postDataJSON();
-        content = { employees: body.employees, gallery: body.gallery };
+        content = { booking: body.booking, employees: body.employees, gallery: body.gallery };
         headSha = `${headSha}1`;
         return route.fulfill({
           status: 200,
@@ -120,6 +128,17 @@ try {
     await page.locator("[data-admin-app]").waitFor({ state: "visible" });
     await page.locator("[data-source-label]", { hasText: "fadifamous/tigergentssaloon · main" }).waitFor({ state: "attached" });
     if (contentAttempts < 2) throw new Error(`Admin did not retry a temporary GitHub connection failure at ${viewport.width}px.`);
+
+    if (viewport.width < 900) await page.locator("[data-sidebar-toggle]").click();
+    await page.locator('[data-section="booking"]').click();
+    await page.locator('input[name="freshaUrl"]').fill("https://www.fresha.com/a/tiger-gents-salon-dubai");
+    await page.locator('input[name="provider"][value="fresha"]').check();
+    await page.getByRole("button", { name: "Save booking settings" }).click();
+    await page.getByText("Fresha active", { exact: true }).waitFor();
+    if (content.booking.provider !== "fresha" || !content.booking.freshaUrl.includes("fresha.com")) {
+      throw new Error(`Booking settings were not published at ${viewport.width}px.`);
+    }
+    await page.screenshot({ path: `test-artifacts/admin-booking-${viewport.width}.png`, fullPage: viewport.width >= 900 });
 
     if (viewport.width < 900) await page.locator("[data-sidebar-toggle]").click();
     await page.locator('[data-section="employees"]').click();

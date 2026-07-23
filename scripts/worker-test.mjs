@@ -5,6 +5,11 @@ const initialDocument = {
   version: 1,
   updatedAt: null,
   content: {
+    booking: {
+      provider: "setmore",
+      setmoreUrl: "https://tigergentssaloon.setmore.com/",
+      freshaUrl: ""
+    },
     employees: [{ id: "employee-abed", slug: "abed", sortOrder: 0, data: { name: "ABED", role: "Barber", initial: "A", bio: "", bookingUrl: "https://example.com/book", imageUrl: "", featured: true, status: "active" } }],
     gallery: [{ id: "picture-salon", slug: "salon", sortOrder: 0, data: { title: "Salon", imageUrl: "/assets/images/salon-wide-opt.webp", altText: "Salon interior", caption: "", layout: "wide", featured: true, status: "active" } }]
   }
@@ -68,8 +73,26 @@ try {
 
   const employees = structuredClone(contentPayload.content.employees);
   employees[0].data.role = "Senior Barber";
+  const invalidBooking = await worker.fetch(jsonRequest("/api/admin/publish", {
+    baseCommitSha: contentPayload.headSha,
+    booking: {
+      provider: "fresha",
+      setmoreUrl: "https://tigergentssaloon.setmore.com/",
+      freshaUrl: "https://example.com/not-fresha"
+    },
+    employees,
+    gallery: contentPayload.content.gallery,
+    summary: "invalid booking provider"
+  }, cookie), env);
+  assert(invalidBooking.status === 400, "A Fresha selection with a non-Fresha URL should be rejected.");
+
   const publish = await worker.fetch(jsonRequest("/api/admin/publish", {
     baseCommitSha: contentPayload.headSha,
+    booking: {
+      provider: "fresha",
+      setmoreUrl: "https://tigergentssaloon.setmore.com/",
+      freshaUrl: "https://www.fresha.com/a/tiger-gents-salon-dubai"
+    },
     employees,
     gallery: contentPayload.content.gallery,
     summary: "update ABED"
@@ -77,6 +100,8 @@ try {
   const publishPayload = await publish.json();
   assert(publish.status === 200 && publishPayload.headSha === "head-2", "Admin should create and advance a GitHub commit.");
   assert(latestDocument.content.employees[0].data.role === "Senior Barber", "Committed JSON should contain the edit.");
+  assert(latestDocument.content.booking.provider === "fresha", "Committed JSON should contain the selected booking provider.");
+  assert(latestDocument.content.booking.freshaUrl.startsWith("https://www.fresha.com/"), "Committed JSON should contain the validated Fresha URL.");
 
   for (const expected of ["/git/blobs", "/git/trees", "/git/commits", "/git/refs/heads/main"]) {
     assert(calls.some((call) => call.path.endsWith(expected)), `GitHub flow did not call ${expected}.`);

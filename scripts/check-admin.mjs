@@ -34,6 +34,9 @@ const workerChecks = [
   ["/git/trees", "GitHub tree creation"],
   ["/git/commits", "GitHub commit creation"],
   ["/git/refs/heads/", "GitHub branch update"],
+  ["normalizeBooking", "booking provider validation"],
+  ["fresha.com", "Fresha URL restriction"],
+  ["setmore.com", "Setmore URL restriction"],
   ["hasValidImageSignature", "uploaded image signature validation"],
   ["MAX_IMAGE_BYTES", "uploaded image size limit"],
   ["Content-Security-Policy", "admin content security policy"]
@@ -44,7 +47,7 @@ for (const forbidden of ["env.DB", "env.MEDIA", "ADMIN_BOOTSTRAP_PASSWORD", "PBK
 }
 
 const adminHtml = readFileSync(join(root, "admin.html"), "utf8");
-for (const section of ["dashboard", "employees", "gallery"]) {
+for (const section of ["dashboard", "employees", "gallery", "booking"]) {
   if (!adminHtml.includes(`data-section="${section}"`)) failures.push(`admin.html: missing ${section} section`);
 }
 for (const obsolete of ["services", "media", "homepage", "business", "reviews", "pages", "audit"]) {
@@ -52,18 +55,20 @@ for (const obsolete of ["services", "media", "homepage", "business", "reviews", 
 }
 
 const adminJs = readFileSync(join(root, "assets/admin/admin.js"), "utf8");
-for (const feature of ["/auth/login", "/content", "/publish", "prepareUpload", "baseCommitSha"]) {
+for (const feature of ["/auth/login", "/content", "/publish", "prepareUpload", "baseCommitSha", "renderBooking", "normalizeBookingState"]) {
   if (!adminJs.includes(feature)) failures.push(`assets/admin/admin.js: missing admin feature ${feature}`);
 }
 
 const site = readFileSync(join(root, "assets/js/site.js"), "utf8");
-for (const feature of ["/assets/data/site-content.json", "hydrateEmployees", "hydrateGallery", "hydrateManagedPictures"]) {
+for (const feature of ["/assets/data/site-content.json", "hydrateEmployees", "hydrateGallery", "hydrateManagedPictures", "applyBookingConfiguration", "booking_provider"]) {
   if (!site.includes(feature)) failures.push(`assets/js/site.js: missing GitHub-content integration ${feature}`);
 }
 if (site.includes("/api/content")) failures.push("assets/js/site.js: obsolete database content endpoint remains");
 
 try {
   const data = JSON.parse(readFileSync(join(root, "assets/data/site-content.json"), "utf8"));
+  if (!["setmore", "fresha"].includes(data.content?.booking?.provider)) failures.push("assets/data/site-content.json: active booking provider is invalid");
+  if (!data.content?.booking?.setmoreUrl) failures.push("assets/data/site-content.json: Setmore URL is missing");
   if (!Array.isArray(data.content?.employees) || !data.content.employees.length) failures.push("assets/data/site-content.json: employees are missing");
   if (!Array.isArray(data.content?.gallery) || !data.content.gallery.length) failures.push("assets/data/site-content.json: gallery is missing");
 } catch {

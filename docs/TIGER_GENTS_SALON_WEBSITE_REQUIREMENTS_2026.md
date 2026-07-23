@@ -11,6 +11,8 @@
 **Website type:** Premium service-business website with Setmore booking conversion
 **Priority:** Mobile-first, responsive, high performance, highly polished, and easy to maintain
 
+> **Operational amendment — July 2026:** The booking provider is configurable through the admin dashboard. Setmore remains the default, and the owner may switch every website booking action to a validated Fresha URL. Provider-specific references below should be interpreted as the currently active booking provider unless a section explicitly discusses a Setmore-only capability.
+
 ---
 
 ## 1. Executive Summary

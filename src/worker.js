@@ -3,6 +3,11 @@ const CONTENT_PATH = "assets/data/site-content.json";
 const MAX_JSON_BYTES = 7 * 1024 * 1024;
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const API_VERSION = "2026-03-10";
+const DEFAULT_BOOKING = Object.freeze({
+  provider: "setmore",
+  setmoreUrl: "https://tigergentssaloon.setmore.com/",
+  freshaUrl: ""
+});
 const IMAGE_TYPES = {
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -111,18 +116,21 @@ async function publishContent(request, env, user) {
 
   let employees;
   let gallery;
+  let booking;
   try {
     employees = normalizeRecords("employees", body.employees);
     gallery = normalizeRecords("gallery", body.gallery);
+    booking = normalizeBooking(body.booking ?? current.document.content?.booking);
   } catch (error) {
     return json({ error: error.message }, 400);
   }
 
   const document = current.document && typeof current.document === "object" ? current.document : {};
-  document.version = 1;
+  document.version = 2;
   document.updatedAt = new Date().toISOString();
   document.updatedBy = user.username;
   document.content = document.content && typeof document.content === "object" ? document.content : {};
+  document.content.booking = booking;
   document.content.employees = employees;
   document.content.gallery = gallery;
 
@@ -216,6 +224,11 @@ async function readRepositoryContent(env) {
   if (!document.content || !Array.isArray(document.content.employees) || !Array.isArray(document.content.gallery)) {
     throw new GitHubError("The website content file is missing the team or gallery section.", 502);
   }
+  try {
+    document.content.booking = normalizeBooking(document.content.booking);
+  } catch {
+    throw new GitHubError("The website content file has invalid booking settings.", 502);
+  }
 
   return {
     document,
@@ -257,6 +270,29 @@ function normalizeEmployee(value) {
     featured: Boolean(data.featured),
     status: ["active", "unavailable", "inactive"].includes(data.status) ? data.status : "active"
   };
+}
+
+function normalizeBooking(value) {
+  const data = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const provider = data.provider === "fresha" ? "fresha" : "setmore";
+  const rawSetmoreUrl = cleanText(data.setmoreUrl || DEFAULT_BOOKING.setmoreUrl, 500);
+  const rawFreshaUrl = cleanText(data.freshaUrl, 500);
+  const setmoreUrl = cleanProviderUrl(rawSetmoreUrl, "setmore");
+  const freshaUrl = cleanProviderUrl(rawFreshaUrl, "fresha");
+
+  if (!setmoreUrl) throw new Error("Enter a valid Setmore booking URL on setmore.com.");
+  if (rawFreshaUrl && !freshaUrl) throw new Error("Enter a valid Fresha booking URL on fresha.com.");
+  if (provider === "fresha" && !freshaUrl) throw new Error("Add the Fresha booking URL before making Fresha active.");
+
+  return { provider, setmoreUrl, freshaUrl };
+}
+
+function cleanProviderUrl(value, provider) {
+  const cleaned = cleanUrl(value);
+  if (!cleaned) return "";
+  const hostname = new URL(cleaned).hostname.toLowerCase();
+  const domain = provider === "fresha" ? "fresha.com" : "setmore.com";
+  return hostname === domain || hostname.endsWith(`.${domain}`) ? cleaned : "";
 }
 
 function normalizeGalleryPicture(value) {

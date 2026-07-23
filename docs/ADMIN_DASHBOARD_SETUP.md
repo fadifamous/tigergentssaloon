@@ -2,8 +2,9 @@
 
 The admin is available at `https://tigergentssalon.com/admin` and is intentionally small. It manages only:
 
-- Team members, roles, biographies, booking links, visibility and portraits
+- Team members, roles, biographies, visibility and portraits
 - Homepage/gallery pictures, order, layout, visibility and alternative text
+- Active booking provider and the saved Setmore/Fresha destination URLs
 
 There is no D1 database and no R2 bucket. GitHub is the single source of truth:
 
@@ -60,12 +61,14 @@ No D1 or R2 binding should be added.
 
 1. Open `https://tigergentssalon.com/admin`.
 2. Sign in with username `admin` and the configured password.
-3. Choose **Team members** or **Website pictures**.
-4. Add, edit, reorder, hide or remove an item.
+3. Choose **Team members**, **Website pictures**, or **Booking system**.
+4. Update the item or select the active booking provider and its validated URL.
 5. Click **Save to website**.
 6. Wait for the connected Cloudflare build to finish, normally about one or two minutes, then refresh the public website.
 
 Every save appears in the GitHub commit history. If two browser sessions try to update the same version, the second is asked to refresh instead of overwriting the newer change.
+
+The booking settings store both provider links so switching back does not require re-entering the previous URL. Setmore links must use `setmore.com`; Fresha links must use `fresha.com`. Every public booking action follows the selected provider, including the header, mobile action bar, services, team cards, and footer.
 
 Uploaded pictures are stored under:
 

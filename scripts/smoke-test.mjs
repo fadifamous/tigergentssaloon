@@ -162,6 +162,11 @@ try {
   await page.unroute(`${base}/assets/data/site-content.json`);
   const managedPayload = {
     content: {
+      booking: {
+        provider: "fresha",
+        setmoreUrl: "https://tigergentssaloon.setmore.com/",
+        freshaUrl: "https://www.fresha.com/a/tiger-gents-salon-dubai"
+      },
       employees: [{ slug: "managed-barber", data: { name: "Managed Barber", role: "Barber", status: "active", featured: true, bookingUrl: "https://example.com/managed-booking" } }],
       gallery: [
         { slug: "managed-picture", data: { title: "Managed picture", imageUrl: "/assets/images/salon-wide-opt.webp", altText: "Managed salon picture", status: "active", featured: true, layout: "wide" } },
@@ -177,6 +182,29 @@ try {
     if (!(await page.getByText(text, { exact: false }).count())) throw new Error(`Managed content did not hydrate: ${text}`);
   }
   if (!(await page.locator('img[alt="Managed salon picture"]').count())) throw new Error("Managed gallery did not hydrate.");
+  const managedBookingTargets = await page.locator(".js-booking").evaluateAll((links) =>
+    links.map((link) => ({ href: link.href, provider: link.dataset.bookingProvider }))
+  );
+  if (
+    managedBookingTargets.some((target) =>
+      target.href !== "https://www.fresha.com/a/tiger-gents-salon-dubai" || target.provider !== "fresha"
+    )
+  ) {
+    throw new Error(`Managed Fresha configuration did not update every booking action: ${JSON.stringify(managedBookingTargets)}`);
+  }
+  await page.evaluate(() => { window.dataLayer = []; });
+  const managedBooking = page.locator(".header-book");
+  await managedBooking.evaluate((link) => link.addEventListener("click", (event) => event.preventDefault(), { once: true }));
+  await managedBooking.click();
+  const managedBookingEvent = await page.evaluate(() =>
+    window.dataLayer.find((item) => item.event === "booking_click")
+  );
+  if (
+    managedBookingEvent?.booking_provider !== "fresha" ||
+    managedBookingEvent?.booking_destination_host !== "www.fresha.com"
+  ) {
+    throw new Error(`Managed booking analytics event is incorrect: ${JSON.stringify(managedBookingEvent)}`);
+  }
   const managedLocationImage = page.locator('[data-managed-picture="salon-entrance"]');
   if ((await managedLocationImage.getAttribute("src")) !== "/assets/uploads/gallery/test-salon-entrance.png") {
     throw new Error("Managed Salon entrance picture did not hydrate the homepage location image.");

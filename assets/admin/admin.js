@@ -1,11 +1,15 @@
-const BOOKING_URL = "https://tigergentssaloon.setmore.com";
+const DEFAULT_BOOKING = Object.freeze({
+  provider: "setmore",
+  setmoreUrl: "https://tigergentssaloon.setmore.com/",
+  freshaUrl: ""
+});
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const CONTENT_RETRY_DELAYS = [700, 1500];
 
 const state = {
   user: null,
   section: "dashboard",
-  content: { employees: [], gallery: [] },
+  content: { booking: { ...DEFAULT_BOOKING }, employees: [], gallery: [] },
   headSha: "",
   repository: "fadifamous/tigergentssaloon",
   branch: "main",
@@ -18,7 +22,8 @@ const state = {
 const sectionMeta = {
   dashboard: ["Website", "Overview", "Team and picture updates are saved directly to GitHub."],
   employees: ["People", "Team members", "Add, edit, hide or remove the people shown on the website."],
-  gallery: ["Photography", "Website pictures", "Manage the pictures shown on the homepage and gallery page."]
+  gallery: ["Photography", "Website pictures", "Manage the pictures shown on the homepage and gallery page."],
+  booking: ["Appointments", "Booking system", "Choose whether every website booking action opens Setmore or Fresha."]
 };
 
 const dom = {
@@ -92,6 +97,7 @@ function bindEvents() {
   document.querySelectorAll("[data-section]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.section)));
   dom.sidebarToggle.addEventListener("click", () => toggleSidebar());
   dom.content.addEventListener("click", handleContentClick);
+  dom.content.addEventListener("submit", handleContentSubmit);
   dom.sectionActions.addEventListener("click", (event) => {
     if (event.target.closest("[data-create]")) openEditor(state.section);
     if (event.target.closest("[data-refresh]")) refreshFromGitHub();
@@ -170,6 +176,7 @@ async function refreshFromGitHub() {
     }
     state.content.employees = Array.isArray(result.content?.employees) ? result.content.employees : [];
     state.content.gallery = Array.isArray(result.content?.gallery) ? result.content.gallery : [];
+    state.content.booking = normalizeBookingState(result.content?.booking);
     state.headSha = result.headSha || "";
     state.repository = result.repository || state.repository;
     state.branch = result.branch || "main";
@@ -214,17 +221,19 @@ function renderSection() {
   if (!connected) return;
   if (state.section === "dashboard") renderDashboard();
   else if (state.section === "employees") renderEmployees();
-  else renderGallery();
+  else if (state.section === "gallery") renderGallery();
+  else renderBooking();
 }
 
 function renderDashboard() {
   const activeEmployees = state.content.employees.filter((item) => item.data?.status === "active").length;
   const activePictures = state.content.gallery.filter((item) => item.data?.status === "active").length;
+  const booking = normalizeBookingState(state.content.booking);
   dom.content.innerHTML = `
     <div class="metric-grid">
       ${metric("Team members", state.content.employees.length, `${activeEmployees} visible`)}
       ${metric("Website pictures", state.content.gallery.length, `${activePictures} visible`)}
-      ${metric("GitHub branch", escapeHtml(state.branch), "Single source of truth")}
+      ${metric("Booking system", providerLabel(booking.provider), "Active on every booking button")}
       ${metric("Last update", state.updatedAt ? escapeHtml(relativeTime(state.updatedAt)) : "Initial", "Saved through admin")}
     </div>
     <div class="dashboard-grid">
@@ -242,6 +251,7 @@ function renderDashboard() {
         <div class="quick-grid">
           <button type="button" data-go="employees">Manage team members <span>→</span></button>
           <button type="button" data-go="gallery">Manage website pictures <span>→</span></button>
+          <button type="button" data-go="booking">Change booking system <span>→</span></button>
           <a class="quick-link" href="/" target="_blank" rel="noopener">Open live website <span>↗</span></a>
         </div>
       </section>
@@ -304,6 +314,79 @@ function pictureCard(item, index) {
   </article>`;
 }
 
+function renderBooking() {
+  const booking = normalizeBookingState(state.content.booking);
+  const activeUrl = booking.provider === "fresha" ? booking.freshaUrl : booking.setmoreUrl;
+  dom.content.innerHTML = `
+    <form class="booking-settings" data-booking-form>
+      <section class="admin-panel booking-provider-panel">
+        <div class="panel-header">
+          <div><p class="eyebrow">Active provider</p><h2>Send every booking to one place.</h2></div>
+          <span class="status-badge published">${escapeHtml(providerLabel(booking.provider))} active</span>
+        </div>
+        <p class="booking-copy">Changing this setting updates the header, mobile action bar, services, team cards, footer, and every other website booking button after Cloudflare publishes the commit.</p>
+        <div class="booking-provider-choice">
+          <label class="provider-option">
+            <input type="radio" name="provider" value="setmore" ${booking.provider === "setmore" ? "checked" : ""}>
+            <span><strong>Setmore</strong><small>Use the saved Setmore appointment page.</small></span>
+          </label>
+          <label class="provider-option">
+            <input type="radio" name="provider" value="fresha" ${booking.provider === "fresha" ? "checked" : ""}>
+            <span><strong>Fresha</strong><small>Use the saved Fresha marketplace or booking page.</small></span>
+          </label>
+        </div>
+      </section>
+      <section class="admin-panel booking-links-panel">
+        <div class="panel-header"><h2>Provider links</h2></div>
+        <div class="booking-link-fields">
+          ${textField("setmoreUrl", "Setmore booking URL", booking.setmoreUrl, { type: "url", wide: true, required: true })}
+          <small>Must be a secure link on setmore.com.</small>
+          ${textField("freshaUrl", "Fresha booking URL", booking.freshaUrl, { type: "url", wide: true })}
+          <small>Required only when Fresha is active. Must be a secure link on fresha.com.</small>
+        </div>
+        <div class="booking-preview">
+          <span>Current destination</span>
+          ${activeUrl ? `<a href="${escapeAttr(activeUrl)}" target="_blank" rel="noopener">${escapeHtml(activeUrl)} <span aria-hidden="true">↗</span></a>` : `<strong>Add the ${escapeHtml(providerLabel(booking.provider))} URL before saving.</strong>`}
+        </div>
+        <p class="form-error" data-booking-error role="alert" hidden></p>
+        <div class="booking-save-row">
+          <p>Saving creates one GitHub commit and triggers the normal Cloudflare deployment.</p>
+          <button class="admin-button admin-button-primary" type="submit">Save booking settings</button>
+        </div>
+      </section>
+    </form>`;
+}
+
+function handleContentSubmit(event) {
+  const form = event.target.closest("[data-booking-form]");
+  if (!form) return;
+  event.preventDefault();
+  saveBookingSettings(form);
+}
+
+async function saveBookingSettings(form) {
+  const errorElement = form.querySelector("[data-booking-error]");
+  hideError(errorElement);
+  const data = new FormData(form);
+  const provider = formText(data, "provider") === "fresha" ? "fresha" : "setmore";
+  const rawSetmoreUrl = formText(data, "setmoreUrl");
+  const rawFreshaUrl = formText(data, "freshaUrl");
+  const setmoreUrl = providerUrl(rawSetmoreUrl, "setmore");
+  const freshaUrl = providerUrl(rawFreshaUrl, "fresha");
+
+  if (!setmoreUrl) return showError(errorElement, "Enter a valid secure Setmore URL on setmore.com.");
+  if (rawFreshaUrl && !freshaUrl) return showError(errorElement, "Enter a valid secure Fresha URL on fresha.com.");
+  if (provider === "fresha" && !freshaUrl) return showError(errorElement, "Add the Fresha booking URL before making Fresha active.");
+
+  const next = cloneContent();
+  next.booking = { provider, setmoreUrl, freshaUrl };
+  try {
+    await publish(next, null, `switch booking system to ${providerLabel(provider)}`);
+  } catch (error) {
+    showError(errorElement, error.message);
+  }
+}
+
 async function handleContentClick(event) {
   const go = event.target.closest("[data-go]");
   if (go) return navigate(go.dataset.go);
@@ -337,7 +420,6 @@ function employeeFields(data = {}) {
     ${textField("initial", "Display initial", data.initial, { maxLength: 2 })}
     ${selectField("status", "Visibility", data.status || "active", [["active", "Visible"], ["unavailable", "Temporarily unavailable"], ["inactive", "Hidden"]])}
     ${textAreaField("bio", "Short biography", data.bio, true)}
-    ${textField("bookingUrl", "Booking link", data.bookingUrl || BOOKING_URL, { type: "url", wide: true })}
     ${imageField(data.imageUrl, false)}
     ${checkboxField("featured", "Show on homepage", Boolean(data.featured))}`;
 }
@@ -375,7 +457,7 @@ async function saveEditor(event) {
         role: formText(form, "role"),
         initial: formText(form, "initial") || formText(form, "name").slice(0, 1).toUpperCase(),
         bio: formText(form, "bio"),
-        bookingUrl: formText(form, "bookingUrl") || BOOKING_URL,
+        bookingUrl: item?.data?.bookingUrl || "",
         imageUrl: item?.data?.imageUrl || "",
         featured: form.get("featured") === "on",
         status: formText(form, "status") || "active"
@@ -456,12 +538,14 @@ async function publish(next, image, summary) {
       method: "POST",
       body: {
         baseCommitSha: state.headSha,
+        booking: next.booking,
         employees: next.employees,
         gallery: next.gallery,
         image,
         summary
       }
     });
+    state.content.booking = normalizeBookingState(result.content.booking);
     state.content.employees = result.content.employees;
     state.content.gallery = result.content.gallery;
     state.headSha = result.headSha;
@@ -503,6 +587,29 @@ function cloneContent() {
   return typeof structuredClone === "function"
     ? structuredClone(state.content)
     : JSON.parse(JSON.stringify(state.content));
+}
+
+function normalizeBookingState(value) {
+  const data = value && typeof value === "object" ? value : {};
+  const setmoreUrl = providerUrl(data.setmoreUrl, "setmore") || DEFAULT_BOOKING.setmoreUrl;
+  const freshaUrl = providerUrl(data.freshaUrl, "fresha");
+  const provider = data.provider === "fresha" && freshaUrl ? "fresha" : "setmore";
+  return { provider, setmoreUrl, freshaUrl };
+}
+
+function providerUrl(value, provider) {
+  try {
+    const url = new URL(String(value || "").trim());
+    const domain = provider === "fresha" ? "fresha.com" : "setmore.com";
+    const hostname = url.hostname.toLowerCase();
+    return url.protocol === "https:" && (hostname === domain || hostname.endsWith(`.${domain}`)) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function providerLabel(provider) {
+  return provider === "fresha" ? "Fresha" : "Setmore";
 }
 
 function closeEditor() {

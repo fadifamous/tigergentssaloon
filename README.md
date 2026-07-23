@@ -9,7 +9,7 @@ A production-ready, mobile-first website for Tiger Gents Salon at Lake Central T
 - Supplied salon photography and primary logo
 - Transparent primary logo, favicon, app icons, OG image, and email export
 - Service prices and durations stored in `assets/js/services-data.js`
-- Setmore booking links on all high-intent actions
+- Admin-selectable Setmore or Fresha booking links on all high-intent actions
 - Click-to-call, desktop-header WhatsApp, and persistent mobile WhatsApp actions for +971 56 228 5900
 - Google Maps direction links
 - Responsive service filtering
@@ -19,7 +19,7 @@ A production-ready, mobile-first website for Tiger Gents Salon at Lake Central T
 - Sitemap, robots file, policy pages, and owner documentation
 - Google Tag Manager container `GTM-K6LPRZ84` and privacy-aware event hooks
 - Simple password-protected Cloudflare Worker admin at `/admin`
-- GitHub-backed team and website-picture editing from one source of truth
+- GitHub-backed team, website-picture, and booking-provider editing from one source of truth
 - Automatic Cloudflare deployment after each admin-created GitHub commit
 
 ## Run locally
@@ -66,7 +66,7 @@ Edit `assets/js/services-data.js`. Each record has:
 
 The Services page uses this file. Update any manually featured homepage card if a featured service changes.
 
-Keep service changes aligned with the salon’s current Setmore catalogue.
+Keep service changes aligned with the salon’s active booking catalogue.
 
 ### Update hours
 
@@ -84,7 +84,7 @@ Only publish client feedback that the salon has permission to use.
 
 ### Add a team member
 
-Use **Admin > Team members**. Add the approved name, role, biography, portrait and booking link, then save. The admin creates a GitHub commit and Cloudflare deploys it automatically.
+Use **Admin > Team members**. Add the approved name, role, biography and portrait, then save. Team booking actions automatically use the globally selected booking provider.
 
 ### Replace images
 
@@ -98,7 +98,7 @@ Each page contains its own title, description, canonical URL, and robots directi
 
 ### Check booking links
 
-Search for `tigergentssaloon.setmore.com` to find every direct booking URL. Run a manual click test on desktop and mobile after any URL change.
+Use **Admin > Booking system** to store the Setmore and Fresha URLs and select the active provider. Saving updates every public `.js-booking` action after Cloudflare deploys the GitHub commit. Run a manual click test on desktop and mobile after switching.
 
 ### Publish changes
 
@@ -116,7 +116,7 @@ The website currently presents:
 - Hours: Monday–Sunday, 10:00 AM–12:00 AM
 - Team: ABED, Shahem, Joe, Tiya
 - Phone and WhatsApp: +971 56 228 5900
-- Online booking: `https://tigergentssaloon.setmore.com`
+- Online booking: Setmore or Fresha, selected through **Admin > Booking system**
 
 Keep these details aligned with the salon’s services and booking setup.
 
@@ -131,7 +131,7 @@ assets/
   js/          Shared behavior and structured service data
 docs/          Requirements and handover reports
 admin.html     Administration dashboard shell
-assets/data/   GitHub-backed team and gallery content
+assets/data/   GitHub-backed team, gallery, and booking configuration
 src/           Cloudflare Worker, login and GitHub update API
 scripts/       Build, integrity and browser checks
 *.html         Public pages

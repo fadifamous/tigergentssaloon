@@ -13,14 +13,12 @@ const required = [
 ];
 
 const failures = [];
-const retiredPlatformPattern = /\x66\x72\x65\x73\x68\x61/i;
 const incorrectDomainPattern = /tigergentssaloon\.com/i;
 for (const file of required) if (!existsSync(join(root, file))) failures.push(`Missing: ${file}`);
 
 const htmlFiles = readdirSync(root).filter((file) => extname(file) === ".html" && file !== "admin.html");
 for (const file of htmlFiles) {
   const html = readFileSync(join(root, file), "utf8");
-  if (retiredPlatformPattern.test(html)) failures.push(`${file}: contains a retired booking-platform reference`);
   if (incorrectDomainPattern.test(html)) failures.push(`${file}: contains the incorrect double-o domain`);
   if (!/<title>[^<]+<\/title>/.test(html)) failures.push(`${file}: missing title`);
   if (!/name="description"/.test(html)) failures.push(`${file}: missing meta description`);
@@ -66,9 +64,6 @@ if (!/data-track="google_reviews_click"/.test(homepage)) {
 }
 
 const sharedSiteScript = readFileSync(join(root, "assets/js/site.js"), "utf8");
-if (retiredPlatformPattern.test(sharedSiteScript)) {
-  failures.push("assets/js/site.js: contains a retired booking-platform reference");
-}
 if (!sharedSiteScript.includes("instagram.com/tiger_gents_salon")) {
   failures.push("assets/js/site.js: missing the official Instagram profile link");
 }

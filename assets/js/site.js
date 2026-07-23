@@ -50,8 +50,33 @@ function managedItems(type) {
   return Array.isArray(MANAGED_CONTENT[type]) ? MANAGED_CONTENT[type] : [];
 }
 
+function bookingSettings() {
+  const configured = MANAGED_CONTENT.booking && typeof MANAGED_CONTENT.booking === "object"
+    ? MANAGED_CONTENT.booking
+    : {};
+  const setmoreUrl = providerBookingUrl(configured.setmoreUrl, "setmore") || BUSINESS.bookingUrl;
+  const freshaUrl = providerBookingUrl(configured.freshaUrl, "fresha");
+  const provider = configured.provider === "fresha" && freshaUrl ? "fresha" : "setmore";
+  return {
+    provider,
+    url: provider === "fresha" ? freshaUrl : setmoreUrl
+  };
+}
+
+function providerBookingUrl(value, provider) {
+  try {
+    const url = new URL(String(value || "").trim());
+    const domain = provider === "fresha" ? "fresha.com" : "setmore.com";
+    const hostname = url.hostname.toLowerCase();
+    return url.protocol === "https:" && (hostname === domain || hostname.endsWith(`.${domain}`)) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
 function bookingLink(label = "Book appointment", locationName = "unknown", className = "button") {
-  return `<a class="${className} js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="${locationName}">${label}<span aria-hidden="true">↗</span></a>`;
+  const booking = bookingSettings();
+  return `<a class="${className} js-booking" href="${booking.url}" target="_blank" rel="noopener noreferrer" data-booking-location="${locationName}" data-booking-provider="${booking.provider}">${label}<span aria-hidden="true">↗</span></a>`;
 }
 
 function renderHeader() {
@@ -94,6 +119,7 @@ function renderHeader() {
 function renderFooter() {
   const mount = document.querySelector("[data-site-footer]");
   if (!mount) return;
+  const booking = bookingSettings();
   mount.innerHTML = `
     <footer class="site-footer">
       <div class="container">
@@ -126,7 +152,7 @@ function renderFooter() {
           <div>
             <p class="footer-heading">Book & policies</p>
             <ul class="footer-links">
-              <li><a class="js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="footer">Book online ↗</a></li>
+              <li><a class="js-booking" href="${booking.url}" target="_blank" rel="noopener noreferrer" data-booking-location="footer" data-booking-provider="${booking.provider}">Book online ↗</a></li>
               <li><a href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="footer">WhatsApp us ↗</a></li>
               <li><a href="${BUSINESS.instagramUrl}" target="_blank" rel="noopener noreferrer" data-track="instagram_click">Instagram ↗</a></li>
               <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="footer_call_link">Call us</a></li>
@@ -170,6 +196,7 @@ function hydrateManagedContent() {
 }
 
 function hydrateEmployees() {
+  const booking = bookingSettings();
   const employees = managedItems("employees")
     .map((item) => ({ ...item.data, slug: item.slug }))
     .filter((employee) => employee.status === "active");
@@ -182,9 +209,17 @@ function hydrateEmployees() {
       const image = employee.imageUrl ? `<img class="team-photo" src="${escapePublic(managedUrl(employee.imageUrl, ""))}" alt="${escapePublic(employee.name)}, ${escapePublic(employee.role)}" loading="lazy">` : "";
       return `<article class="team-card ${image ? "has-image" : ""} reveal">
         ${image}<span class="team-initial" aria-hidden="true">${escapePublic(employee.initial || employee.name.slice(0, 1))}</span>
-        <div><h3>${escapePublic(employee.name)}</h3><p class="team-role">${escapePublic(employee.role)}</p>${homepage ? "" : `<p class="copy-muted">${escapePublic(employee.bio || "Available to select within our live booking flow.")}</p>`}<a class="text-link js-booking" href="${escapePublic(managedUrl(employee.bookingUrl, BUSINESS.bookingUrl))}" target="_blank" rel="noopener noreferrer" data-booking-location="team_${escapePublic(slugForTracking(employee.slug || employee.name))}">Book with ${escapePublic(employee.name)}</a></div>
+        <div><h3>${escapePublic(employee.name)}</h3><p class="team-role">${escapePublic(employee.role)}</p>${homepage ? "" : `<p class="copy-muted">${escapePublic(employee.bio || "Available to select within our live booking flow.")}</p>`}<a class="text-link js-booking" href="${escapePublic(booking.url)}" target="_blank" rel="noopener noreferrer" data-booking-location="team_${escapePublic(slugForTracking(employee.slug || employee.name))}" data-booking-provider="${booking.provider}">Book with ${escapePublic(employee.name)}</a></div>
       </article>`;
     }).join("");
+  });
+}
+
+function applyBookingConfiguration() {
+  const booking = bookingSettings();
+  document.querySelectorAll(".js-booking").forEach((link) => {
+    link.href = booking.url;
+    link.dataset.bookingProvider = booking.provider;
   });
 }
 
@@ -293,7 +328,9 @@ function initTracking() {
       track("booking_click", {
         booking_click_location: booking.dataset.bookingLocation || "unknown",
         booking_click_page: page,
-        booking_click_device: matchMedia("(max-width: 820px)").matches ? "mobile" : "desktop"
+        booking_click_device: matchMedia("(max-width: 820px)").matches ? "mobile" : "desktop",
+        booking_provider: booking.dataset.bookingProvider || bookingSettings().provider,
+        booking_destination_host: new URL(booking.href).hostname
       });
     }
     const tracked = event.target.closest("[data-track]");
@@ -386,6 +423,7 @@ async function bootstrapSite() {
   renderFooter();
   renderMobileActions();
   hydrateManagedContent();
+  applyBookingConfiguration();
   renderCookieBanner();
   document.querySelectorAll("[data-year]").forEach((node) => (node.textContent = new Date().getFullYear()));
   initNavigation();
