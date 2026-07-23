@@ -939,21 +939,27 @@ h3 {
 
 .location-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center;
 }
 
 .location-copy {
-  padding: clamp(54px, 8vw, 110px);
+  padding: clamp(54px, 5.5vw, 88px);
 }
 
 .location-media {
-  min-height: 620px;
+  min-height: 0;
+  aspect-ratio: 1799 / 874;
+  margin: clamp(12px, 1vw, 20px);
+  background: var(--obsidian);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.2);
 }
 
 .location-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .address {
@@ -1689,7 +1695,9 @@ h3 {
   }
 
   .location-media {
-    min-height: 420px;
+    min-height: 0;
+    aspect-ratio: 1799 / 874;
+    margin: 0;
   }
 
   .footer-grid {
