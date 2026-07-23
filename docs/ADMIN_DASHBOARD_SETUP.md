@@ -1,6 +1,6 @@
 # Tiger Gents Salon admin setup
 
-The admin is available at `https://tigergentssaloon.com/admin` and is intentionally small. It manages only:
+The admin is available at `https://tigergentssalon.com/admin` and is intentionally small. It manages only:
 
 - Team members, roles, biographies, booking links, visibility and portraits
 - Homepage/gallery pictures, order, layout, visibility and alternative text
@@ -58,7 +58,7 @@ No D1 or R2 binding should be added.
 
 ## Using the admin
 
-1. Open `https://tigergentssaloon.com/admin`.
+1. Open `https://tigergentssalon.com/admin`.
 2. Sign in with username `admin` and the configured password.
 3. Choose **Team members** or **Website pictures**.
 4. Add, edit, reorder, hide or remove an item.

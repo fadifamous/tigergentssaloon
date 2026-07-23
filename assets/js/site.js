@@ -5,6 +5,7 @@ const BUSINESS = Object.freeze({
   phoneDisplay: "+971 56 228 5900",
   phoneUrl: "tel:+971562285900",
   whatsappUrl: "https://wa.me/971562285900",
+  instagramUrl: "https://www.instagram.com/tiger_gents_salon/",
   rating: "5 stars",
   hours: "10:00 AM–12:00 AM",
   reviewCount: "100+",
@@ -127,6 +128,7 @@ function renderFooter() {
             <ul class="footer-links">
               <li><a class="js-booking" href="${BUSINESS.bookingUrl}" target="_blank" rel="noopener noreferrer" data-booking-location="footer">Book online ↗</a></li>
               <li><a href="${BUSINESS.whatsappUrl}" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-whatsapp-location="footer">WhatsApp us ↗</a></li>
+              <li><a href="${BUSINESS.instagramUrl}" target="_blank" rel="noopener noreferrer" data-track="instagram_click">Instagram ↗</a></li>
               <li><a href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="footer_call_link">Call us</a></li>
               <li><a href="${BUSINESS.mapUrl}" target="_blank" rel="noopener noreferrer" data-track="google_reviews_click">Reviews on Google ↗</a></li>
               <li><a href="privacy.html">Privacy</a></li>

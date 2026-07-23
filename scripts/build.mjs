@@ -17,7 +17,7 @@ for (const directory of ["assets"]) {
 const entries = await readdir(root, { withFileTypes: true });
 for (const entry of entries) {
   if (!entry.isFile()) continue;
-  if (extname(entry.name) === ".html" || ["robots.txt", "sitemap.xml", "site.webmanifest"].includes(entry.name)) {
+  if (extname(entry.name) === ".html" || ["robots.txt", "sitemap.xml", "site.webmanifest", "favicon.png", "favicon.ico"].includes(entry.name)) {
     await cp(join(root, entry.name), join(dist, entry.name));
   }
 }

@@ -50,7 +50,7 @@ Use these Cloudflare Builds values:
 
 The one-time password and GitHub-token secret setup is documented in [docs/ADMIN_DASHBOARD_SETUP.md](docs/ADMIN_DASHBOARD_SETUP.md).
 
-Before connecting a custom domain, replace the temporary canonical domain `https://tigergentssaloon.com/` in HTML, `robots.txt`, and `sitemap.xml` if the final domain differs.
+The canonical production domain is `https://tigergentssalon.com/`; keep HTML, `robots.txt`, structured data, and `sitemap.xml` aligned with it.
 
 ## Owner guide
 

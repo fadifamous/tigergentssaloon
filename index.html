@@ -14,42 +14,74 @@
   <meta name="description" content="Premium haircuts, beard grooming, nail care, facials and men's grooming at Tiger Gents Salon, Lake Central Tower, Business Bay. Book online.">
   <meta name="theme-color" content="#090a09">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://tigergentssaloon.com/">
-  <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="canonical" href="https://tigergentssalon.com/">
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="assets/images/salon-depth-opt.webp" imagesrcset="assets/images/salon-depth-640.webp 640w, assets/images/salon-depth-800.webp 800w, assets/images/salon-depth-opt.webp 1200w" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high">
   <link rel="preload" href="assets/fonts/bodoni-moda-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/styles.css">
   <meta property="og:title" content="Tiger Gents Salon | Business Bay, Dubai">
   <meta property="og:description" content="Premium grooming, personal attention, and high service standards—delivered with respect for your time.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tigergentssaloon.com/">
-  <meta property="og:image" content="https://tigergentssaloon.com/assets/brand/tiger-og-image.png">
+  <meta property="og:url" content="https://tigergentssalon.com/">
+  <meta property="og:image" content="https://tigergentssalon.com/assets/brand/tiger-og-image.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": ["HairSalon", "HealthAndBeautyBusiness"],
-    "name": "Tiger Gents Salon",
-    "image": "https://tigergentssaloon.com/assets/images/salon-wide-opt.webp",
-    "url": "https://tigergentssaloon.com/",
-    "telephone": "+971 56 228 5900",
-    "sameAs": [
-      "https://share.google/PqwDRzzGm2ZEVF8zT"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Lake Central Tower, Marasi Drive, Business Bay",
-      "addressLocality": "Dubai",
-      "addressCountry": "AE"
-    },
-    "openingHoursSpecification": [{
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "10:00",
-      "closes": "24:00"
-    }],
-    "priceRange": "AED"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://tigergentssalon.com/#website",
+        "url": "https://tigergentssalon.com/",
+        "name": "Tiger Gents Salon",
+        "alternateName": ["Tiger Gents", "tigergentssalon.com"],
+        "publisher": {
+          "@id": "https://tigergentssalon.com/#business"
+        }
+      },
+      {
+        "@type": ["HairSalon", "HealthAndBeautyBusiness"],
+        "@id": "https://tigergentssalon.com/#business",
+        "name": "Tiger Gents Salon",
+        "alternateName": "Tiger Gents Salon Dubai",
+        "description": "Premium barbering and men's grooming at Lake Central Tower in Business Bay, Dubai.",
+        "image": "https://tigergentssalon.com/assets/images/salon-wide-opt.webp",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://tigergentssalon.com/assets/brand/icon-512.png",
+          "contentUrl": "https://tigergentssalon.com/assets/brand/icon-512.png",
+          "width": 512,
+          "height": 512
+        },
+        "url": "https://tigergentssalon.com/",
+        "telephone": "+971562285900",
+        "hasMap": "https://share.google/PqwDRzzGm2ZEVF8zT",
+        "sameAs": [
+          "https://www.instagram.com/tiger_gents_salon/",
+          "https://share.google/PqwDRzzGm2ZEVF8zT"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Lake Central Tower, Marasi Drive, Business Bay",
+          "addressLocality": "Dubai",
+          "addressRegion": "Dubai",
+          "addressCountry": "AE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 25.1861261,
+          "longitude": 55.2729302
+        },
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "10:00",
+          "closes": "24:00"
+        }],
+        "priceRange": "AED"
+      }
+    ]
   }
   </script>
 </head>

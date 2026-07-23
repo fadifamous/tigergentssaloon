@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tigergentssaloon.com/sitemap.xml
+Sitemap: https://tigergentssalon.com/sitemap.xml

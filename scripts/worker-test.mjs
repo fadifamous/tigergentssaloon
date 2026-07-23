@@ -1,6 +1,6 @@
 import worker from "../src/worker.js";
 
-const origin = "https://tigergentssaloon.com";
+const origin = "https://tigergentssalon.com";
 const initialDocument = {
   version: 1,
   updatedAt: null,
