@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "updatedAt": "2026-07-23T08:04:45.238Z",
+  "updatedAt": "2026-07-23T13:15:20.112Z",
   "updatedBy": "admin",
   "content": {
     "booking": {
-      "provider": "setmore",
+      "provider": "fresha",
       "setmoreUrl": "https://tigergentssaloon.setmore.com/",
-      "freshaUrl": ""
+      "freshaUrl": "https://www.fresha.com/en-GB/a/tiger-gents-salon-dubai-tiger-gents-salon-lake-central-tower-marasi-dr-business-bay-de94oe1s/booking?allOffer=true&cartId=1e1e1ccb-12b9-4ef3-975f-15f448a7cada"
     },
     "employees": [
       {
