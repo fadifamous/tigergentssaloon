@@ -90,6 +90,8 @@ Use **Admin > Team members**. Add the approved name, role, biography, portrait a
 
 Use **Admin > Website pictures** to upload JPEG, PNG, WebP or AVIF files up to 5 MB. Meaningful alternative text is required. New files are committed under `assets/uploads/`.
 
+The active picture with the `salon-entrance` slug supplies the full Gallery entry plus the location images on the homepage and Contact page.
+
 ### Update SEO
 
 Each page contains its own title, description, canonical URL, and robots directive. The homepage also includes local-business structured data and Open Graph metadata. Update `sitemap.xml` whenever a public page is added or removed.
