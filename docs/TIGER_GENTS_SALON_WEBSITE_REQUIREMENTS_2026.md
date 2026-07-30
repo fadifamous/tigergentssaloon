@@ -128,7 +128,7 @@ This is an implementation snapshot and should be kept aligned with current salon
 - **Location:** Lake Central Tower, Marasi Drive, Business Bay, Dubai
 - **Published Google rating:** 5 stars
 - **Published Google review milestone:** 100+ reviews, owner-confirmed July 2026
-- **Published hours at research time:** Monday–Sunday, 10:00 AM–12:00 AM
+- **Published hours at research time:** Monday–Sunday, 9:00 AM–12:00 AM
 - **Booking capabilities:** Online appointment selection and confirmation
 - **Service categories include:** Hair, shaving, hair treatment, manicure, pedicure, foot spa, facial, massage, and extras
 
@@ -1079,7 +1079,7 @@ Desktop optional; mobile omit unless necessary.
 Content:
 
 - Business Bay, Dubai
-- Open daily 10 AM–12 AM
+- Open daily 9 AM–12 AM
 - 5.0 Google rating
 
 Keep quiet and concise.

@@ -113,7 +113,7 @@ Use **Admin > Booking system** to store the Setmore and Fresha URLs and select t
 The website currently presents:
 
 - 5.0 rating from 100+ Google reviews
-- Hours: Monday–Sunday, 10:00 AM–12:00 AM
+- Hours: Monday–Sunday, 9:00 AM–12:00 AM
 - Team: ABED, Shahem, Joe, Tiya
 - Phone and WhatsApp: +971 56 228 5900
 - Online booking: Setmore or Fresha, selected through **Admin > Booking system**
