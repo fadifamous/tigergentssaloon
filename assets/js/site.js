@@ -208,7 +208,7 @@ function hydrateEmployees() {
   if (!employees.length) return;
   document.querySelectorAll("[data-managed-team]").forEach((grid) => {
     const homepage = grid.hasAttribute("data-home-team");
-    const selected = (homepage ? employees.filter((employee) => employee.featured) : employees).slice(0, homepage ? 4 : employees.length);
+    const selected = homepage ? employees.filter((employee) => employee.featured) : employees;
     if (!selected.length) return;
     grid.innerHTML = selected.map((employee) => {
       const image = employee.imageUrl ? `<img class="team-photo" src="${escapePublic(managedUrl(employee.imageUrl, ""))}" alt="${escapePublic(employee.name)}, ${escapePublic(employee.role)}" loading="lazy">` : "";

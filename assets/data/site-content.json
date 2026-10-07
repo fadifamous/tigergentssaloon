@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-07-29T07:54:16.331Z",
+  "updatedAt": "2026-10-07T19:02:54.000Z",
   "updatedBy": "admin",
   "content": {
     "booking": {
@@ -64,6 +64,21 @@
           "initial": "T",
           "bio": "Available to select within our live booking flow.",
           "bookingUrl": "https://tigergentssaloon.setmore.com/",
+          "imageUrl": "",
+          "featured": true,
+          "status": "active"
+        }
+      },
+      {
+        "id": "employee-janet",
+        "slug": "janet",
+        "sortOrder": 4,
+        "data": {
+          "name": "Janet",
+          "role": "Hair Technician",
+          "initial": "J",
+          "bio": "Available to select within our live booking flow.",
+          "bookingUrl": "https://www.fresha.com/book-now/tiger-gents-salon-slqeptua/all-offer?share=true&pId=2516452",
           "imageUrl": "",
           "featured": true,
           "status": "active"

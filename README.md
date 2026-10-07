@@ -124,7 +124,7 @@ The website currently presents:
 
 - 5.0 rating from 100+ Google reviews
 - Hours: Monday–Sunday, 9:00 AM–12:00 AM
-- Team: ABED, Shahem, Joe, Tiya
+- Team: ABED, Shahem, Joe, Tiya, Janet (Hair Technician)
 - Phone and WhatsApp: +971 56 228 5900
 - Online booking: Setmore or Fresha, selected through **Admin > Booking system**
 

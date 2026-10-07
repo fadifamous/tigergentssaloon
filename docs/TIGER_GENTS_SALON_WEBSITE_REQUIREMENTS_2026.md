@@ -328,7 +328,7 @@ Target: Trust established within the first 30–60 seconds.
 
 1. Arrives from social media or recommendation
 2. Opens Team
-3. Selects ABED, Shahem, Joe, or Tiya
+3. Selects ABED, Shahem, Joe, Tiya, or Janet (Hair Technician)
 4. Chooses “Book with [Name]”
 5. Continues on Setmore
 

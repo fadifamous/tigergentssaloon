@@ -898,6 +898,12 @@ h3 {
   transform: rotate(26deg);
 }
 
+@media (min-width: 1280px) {
+  .team-grid:has(> .team-card:nth-child(5)):not(:has(> .team-card:nth-child(6))) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
 .nav-link[href$="#packages"] { color: var(--brass-light); }
 
 .team-card > div {
