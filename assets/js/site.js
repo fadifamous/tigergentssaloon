@@ -92,7 +92,7 @@ function renderHeader() {
 
   mount.innerHTML = `
     <a class="promo-announcement" href="index.html#packages" data-track="promo_view" data-promo-location="announcement">
-      <span>New grooming packages from <strong>AED 189</strong></span><span>View offers <span aria-hidden="true">→</span></span>
+      <span>Grooming packages from <strong>AED 189</strong></span><span class="promo-announcement-action">View packages <span aria-hidden="true">→</span></span>
     </a>
     <div class="utility">
       <div class="container utility-inner">
