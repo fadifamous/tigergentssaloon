@@ -23,7 +23,7 @@ const sectionMeta = {
   dashboard: ["Website", "Overview", "Team and picture updates are saved directly to GitHub."],
   employees: ["People", "Team members", "Add, edit, hide or remove the people shown on the website."],
   gallery: ["Photography", "Website pictures", "Manage the pictures shown on the homepage and gallery page."],
-  booking: ["Appointments", "Booking system", "Choose whether every website booking action opens Setmore or Fresha."]
+  booking: ["Appointments", "Booking system", "Choose whether general website booking actions open Setmore or Fresha."]
 };
 
 const dom = {
@@ -233,7 +233,7 @@ function renderDashboard() {
     <div class="metric-grid">
       ${metric("Team members", state.content.employees.length, `${activeEmployees} visible`)}
       ${metric("Website pictures", state.content.gallery.length, `${activePictures} visible`)}
-      ${metric("Booking system", providerLabel(booking.provider), "Active on every booking button")}
+      ${metric("Booking system", providerLabel(booking.provider), "Active on general booking buttons")}
       ${metric("Last update", state.updatedAt ? escapeHtml(relativeTime(state.updatedAt)) : "Initial", "Saved through admin")}
     </div>
     <div class="dashboard-grid">
@@ -321,10 +321,10 @@ function renderBooking() {
     <form class="booking-settings" data-booking-form>
       <section class="admin-panel booking-provider-panel">
         <div class="panel-header">
-          <div><p class="eyebrow">Active provider</p><h2>Send every booking to one place.</h2></div>
+          <div><p class="eyebrow">Active provider</p><h2>Choose your booking destination.</h2></div>
           <span class="status-badge published">${escapeHtml(providerLabel(booking.provider))} active</span>
         </div>
-        <p class="booking-copy">Changing this setting updates the header, mobile action bar, services, team cards, footer, and every other website booking button after Cloudflare publishes the commit.</p>
+        <p class="booking-copy">Changing this setting updates general booking buttons in the header, mobile action bar, services, team cards and footer after Cloudflare publishes the commit. Promotional package buttons keep their individual Fresha links.</p>
         <div class="booking-provider-choice">
           <label class="provider-option">
             <input type="radio" name="provider" value="setmore" ${booking.provider === "setmore" ? "checked" : ""}>

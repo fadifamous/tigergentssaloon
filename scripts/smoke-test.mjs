@@ -37,7 +37,7 @@ const primeScrollReveals = async (page) => {
 let browser;
 try {
   await waitForServer();
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: true, channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
   const desktop = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await desktop.newPage();
   await page.route("https://www.googletagmanager.com/**", (route) =>
@@ -64,7 +64,7 @@ try {
     if (!(await page.locator("#main-content").count())) throw new Error(`${path}: missing main content`);
     if (!(await page.locator(".site-header").count())) throw new Error(`${path}: header did not render`);
     if (!(await page.locator(".site-footer").count())) throw new Error(`${path}: footer did not render`);
-    const bookingTargets = await page.locator(".js-booking").evaluateAll((links) => links.map((link) => link.href));
+    const bookingTargets = await page.locator('.js-booking:not([data-booking-fixed="true"])').evaluateAll((links) => links.map((link) => link.href));
     if (bookingTargets.some((href) => href !== "https://tigergentssaloon.setmore.com/")) {
       throw new Error(`${path}: one or more booking actions do not use Setmore.`);
     }
@@ -182,7 +182,7 @@ try {
     if (!(await page.getByText(text, { exact: false }).count())) throw new Error(`Managed content did not hydrate: ${text}`);
   }
   if (!(await page.locator('img[alt="Managed salon picture"]').count())) throw new Error("Managed gallery did not hydrate.");
-  const managedBookingTargets = await page.locator(".js-booking").evaluateAll((links) =>
+  const managedBookingTargets = await page.locator('.js-booking:not([data-booking-fixed="true"])').evaluateAll((links) =>
     links.map((link) => ({ href: link.href, provider: link.dataset.bookingProvider }))
   );
   if (
@@ -232,7 +232,7 @@ try {
   await mobilePage.locator(".menu-toggle").click();
   if ((await mobilePage.locator(".menu-toggle").getAttribute("aria-expanded")) !== "true") throw new Error("Mobile menu failed to open.");
   const mobileNavLinks = mobilePage.locator(".site-nav .nav-link");
-  if ((await mobileNavLinks.count()) !== 6) throw new Error("Mobile menu is missing navigation links.");
+  if ((await mobileNavLinks.count()) !== 7) throw new Error("Mobile menu is missing navigation links.");
   for (let index = 0; index < await mobileNavLinks.count(); index += 1) {
     if (!(await mobileNavLinks.nth(index).isVisible())) throw new Error(`Mobile menu link ${index + 1} is not visible.`);
   }

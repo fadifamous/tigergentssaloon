@@ -15,6 +15,7 @@ const BUSINESS = Object.freeze({
 
 const navItems = [
   ["services.html", "Services"],
+  ["index.html#packages", "Packages"],
   ["team.html", "Team"],
   ["standard.html", "The Tiger Standard"],
   ["gallery.html", "Gallery"],
@@ -90,6 +91,9 @@ function renderHeader() {
     .join("");
 
   mount.innerHTML = `
+    <a class="promo-announcement" href="index.html#packages" data-track="promo_view" data-promo-location="announcement">
+      <span>New grooming packages from <strong>AED 189</strong></span><span>View offers <span aria-hidden="true">→</span></span>
+    </a>
     <div class="utility">
       <div class="container utility-inner">
         <span>${BUSINESS.addressLine1} · ${BUSINESS.addressLine2} · <a class="utility-contact" href="${BUSINESS.phoneUrl}" data-track="phone_click" data-phone-location="desktop_utility">${BUSINESS.phoneDisplay}</a></span>
@@ -142,6 +146,7 @@ function renderFooter() {
             <p class="footer-heading">Navigate</p>
             <ul class="footer-links">
               <li><a href="services.html">Services</a></li>
+              <li><a href="index.html#packages">Grooming packages</a></li>
               <li><a href="team.html">Team</a></li>
               <li><a href="standard.html">The Tiger Standard</a></li>
               <li><a href="products.html">Product quality</a></li>
@@ -218,6 +223,10 @@ function hydrateEmployees() {
 function applyBookingConfiguration() {
   const booking = bookingSettings();
   document.querySelectorAll(".js-booking").forEach((link) => {
+    if (link.dataset.bookingFixed === "true" && providerBookingUrl(link.href, "fresha")) {
+      link.dataset.bookingProvider = "fresha";
+      return;
+    }
     link.href = booking.url;
     link.dataset.bookingProvider = booking.provider;
   });
@@ -325,13 +334,20 @@ function initTracking() {
   document.addEventListener("click", (event) => {
     const booking = event.target.closest(".js-booking");
     if (booking) {
-      track("booking_click", {
+      const details = {
         booking_click_location: booking.dataset.bookingLocation || "unknown",
         booking_click_page: page,
         booking_click_device: matchMedia("(max-width: 820px)").matches ? "mobile" : "desktop",
         booking_provider: booking.dataset.bookingProvider || bookingSettings().provider,
         booking_destination_host: new URL(booking.href).hostname
-      });
+      };
+      if (booking.dataset.packageId) {
+        details.package_id = booking.dataset.packageId;
+        details.package_name = booking.dataset.packageName;
+        details.package_offer_price = Number(booking.dataset.packagePrice);
+        details.currency = "AED";
+      }
+      track("booking_click", details);
     }
     const tracked = event.target.closest("[data-track]");
     if (tracked) {
@@ -341,6 +357,9 @@ function initTracking() {
       }
       if (tracked.dataset.track === "phone_click") {
         details.phone_click_location = tracked.dataset.phoneLocation || "unknown";
+      }
+      if (tracked.dataset.track === "promo_view") {
+        details.promo_location = tracked.dataset.promoLocation || "unknown";
       }
       track(tracked.dataset.track, details);
     }

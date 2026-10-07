@@ -98,7 +98,17 @@ Each page contains its own title, description, canonical URL, and robots directi
 
 ### Check booking links
 
-Use **Admin > Booking system** to store the Setmore and Fresha URLs and select the active provider. Saving updates every public `.js-booking` action after Cloudflare deploys the GitHub commit. Run a manual click test on desktop and mobile after switching.
+Use **Admin > Booking system** to store the Setmore and Fresha URLs and select the active provider. Saving updates general public `.js-booking` actions after Cloudflare deploys the GitHub commit. Promotional packages marked `data-booking-fixed="true"` retain their individual Fresha package links. Run a manual click test on desktop and mobile after switching.
+
+### Preview promotional packages
+
+The October package promotion lives at `index.html#packages`, after Selected services and before The Tiger Standard. It follows the supplied dark-and-gold design with four grooming cards and a separate Full Grooming Spa feature. Announcement, navigation, hero, footer, and Services-page links lead to this section.
+
+Run `npm start` and open `http://127.0.0.1:4173/#packages` to review locally. Promotion prices, inclusions, savings, and fixed Fresha links are in `index.html`. Each offer uses Fresha's `initialItemIds` filter, with the matching package UUID and salon provider ID `2516452`.
+
+Package clicks use the existing `booking_click` event and also supply `package_id`, `package_name`, `package_offer_price`, and `currency`. GTM/GA4 must forward those parameters to make them available in analytics reports. These events measure outbound clicks to Fresha.
+
+Run `node scripts/qa-promo-independent.mjs` with the preview server running for the desktop/mobile package integration checks. Screenshots and the report are written to the ignored `test-artifacts/promo-qa/` directory. No promotion end date was supplied, so no expiry date is displayed.
 
 ### Publish changes
 
