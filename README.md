@@ -92,6 +92,8 @@ Use **Admin > Website pictures** to upload JPEG, PNG, WebP or AVIF files up to 5
 
 The active picture with the `salon-entrance` slug supplies the full Gallery entry plus the location images on the homepage and Contact page.
 
+The homepage uses the refined interior hero image. Its original assets are retained; see [Hero image rollback](docs/HERO_IMAGE_ROLLBACK.md) to restore the earlier background with a single markup change.
+
 ### Update SEO
 
 Each page contains its own title, description, canonical URL, and robots directive. The homepage also includes local-business structured data and Open Graph metadata. Update `sitemap.xml` whenever a public page is added or removed.
